@@ -74,24 +74,6 @@ public abstract class Jeu {
      */
     public void verifierVictoire() {
         // TODO implement here
-    }
-    
-    public static Jeu getJeu(int choix) {
-    	
-    	switch (choix) {
-    	
-    		case 1 : {
-    			return new Combinaison();
-    		}
-    		
-    		case 2 : {
-    			return new Mastermind();
-    		}
-    		
-    		default : return null;
-    	}
-    }
-
-
+    }    
 
 }

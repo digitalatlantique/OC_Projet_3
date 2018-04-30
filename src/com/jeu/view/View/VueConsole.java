@@ -41,7 +41,7 @@ public class VueConsole {
      */
     public void afficherMenuJeux() {
     	String message = 	  "***********************************************************************\n"
-							+ "*                            Choisir un jeu :	                     *\n"
+							+ "*                            Choisir un jeu                           *\n"
 							+ "*                                                                     *\n"
 							+ "* 1 : Recherche d'une combinaison avec +-                             *\n"
 							+ "* 2 : Mastermind                                                      *\n"
@@ -53,7 +53,14 @@ public class VueConsole {
      * 
      */
     public void afficherMenuMode() {
-        // TODO implement here
+    	String message = 	  "***********************************************************************\n"
+							+ "*                            Choisir un mode                          *\n"
+							+ "*                                                                     *\n"
+							+ "* 1 : Challenger                                                      *\n"
+							+ "* 2 : Défenseur                                                       *\n"
+							+ "* 3 : Duel                                                            *\n"
+							+ "***********************************************************************";
+System.out.println(message);
     }
 
     /**

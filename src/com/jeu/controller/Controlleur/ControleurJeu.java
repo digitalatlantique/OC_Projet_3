@@ -86,8 +86,10 @@ public class ControleurJeu {
     public void demarrerSession() {
     	
     	String saisie;
+    	int mode;
     	session = true;
     	
+    	// Menu pour choisir un jeu
     	do {    		
     		vue.afficherMenuJeux(); 
     		saisie = sc.next();
@@ -96,8 +98,20 @@ public class ControleurJeu {
     	
     	jeu = JeuFactory.getJeu(Integer.parseInt(saisie));
     	
+    	// Menu pour choisir un mode
+    	do {
+    		vue.afficherMenuMode();
+    		saisie = sc.next();
+    	}
+    	while(!testerChoixMode(saisie));
     	
+    	mode = Integer.parseInt(saisie);
     	
+    	switch (mode) {
+	    	case 1 : {
+	    		modeChallenger();
+	    	}
+    	}
     	
     }
 
@@ -155,6 +169,14 @@ public class ControleurJeu {
     public boolean testerChoixJeu(String string) {			
       	 
 		Pattern pattern = Pattern.compile("[12]{1}");
+		Matcher matcher = pattern.matcher(string);
+		boolean resultat = matcher.matches();
+		return resultat;    	
+    }
+    
+    public boolean testerChoixMode(String string) {			
+     	 
+		Pattern pattern = Pattern.compile("[1-3]{1}");
 		Matcher matcher = pattern.matcher(string);
 		boolean resultat = matcher.matches();
 		return resultat;    	
