@@ -6,13 +6,11 @@ import java.util.*;
 /**
  * 
  */
-public abstract class Jeu implements JeuFactory {
+public abstract class Jeu {
+	
+	public static final int COMBINAISON = 1;
+	public static final int MASTERMIND = 2;
 
-    /**
-     * Default constructor
-     */
-    public Jeu() {
-    }
 
     /**
      * 
@@ -77,21 +75,23 @@ public abstract class Jeu implements JeuFactory {
     public void verifierVictoire() {
         // TODO implement here
     }
-
-    /**
-     * @return
-     */
-    public Jeu getJeuCombinaison() {
-        // TODO implement here
-        return null;
+    
+    public static Jeu getJeu(int choix) {
+    	
+    	switch (choix) {
+    	
+    		case 1 : {
+    			return new Combinaison();
+    		}
+    		
+    		case 2 : {
+    			return new Mastermind();
+    		}
+    		
+    		default : return null;
+    	}
     }
 
-    /**
-     * @return
-     */
-    public Jeu getJeuMastermind() {
-        // TODO implement here
-        return null;
-    }
+
 
 }

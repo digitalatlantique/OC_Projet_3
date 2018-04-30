@@ -13,6 +13,14 @@ public class Joueur {
      */
     public Joueur() {
     }
+    
+    /**
+     * 
+     * @param pseudo
+     */
+    public Joueur(String pseudo) {
+    	this.pseudo = pseudo;
+    }
 
     /**
      * 
@@ -24,6 +32,22 @@ public class Joueur {
      */
     private TypeJoueur type;
 
+	public String getPseudo() {
+		return pseudo;
+	}
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+
+	public TypeJoueur getType() {
+		return type;
+	}
+
+	public void setType(TypeJoueur type) {
+		this.type = type;
+	}
 
 
+    
 }

@@ -18,12 +18,35 @@ public class VueConsole {
      * 
      */
     private Scanner scanner;
+    
+    /**
+     * 
+     */    
+    public void afficherAccueil() {
+    	
+    	String message = 	"***********************************************************************\n"
+    						+"*                            Bienvenue !                              *\n"
+    						+"*      Cette application vous propose des jeux de logique.            *\n"
+    						+"***********************************************************************";    	
+    	System.out.println(message);
+    }
+    
+    public void afficherMessage(String message) {
+    	
+    	System.out.println(message);
+    }
 
     /**
      * 
      */
     public void afficherMenuJeux() {
-        // TODO implement here
+    	String message = 	  "***********************************************************************\n"
+							+ "*                            Choisir un jeu :	                     *\n"
+							+ "*                                                                     *\n"
+							+ "* 1 : Recherche d'une combinaison avec +-                             *\n"
+							+ "* 2 : Mastermind                                                      *\n"
+							+ "***********************************************************************";
+    	System.out.println(message);
     }
 
     /**
