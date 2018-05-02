@@ -6,6 +6,7 @@ Compétences à valider : Mise en oeuvre des concepts fondamentaux de la programma
 Contexte :
 
 Créer une application proposant des jeux de logique.
+
 1 - La recherche d'une combinaison à l'aide d'indications +/-
 2 - Le célèbre Mastermind. 
 

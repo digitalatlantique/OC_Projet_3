@@ -68,46 +68,31 @@ public class ControleurJeu {
     
     public void initialiserSession() {
     	
-    	String pseudo;
-    	
     	// Affichage d'un message d'accueil
     	vue.afficherAccueil();
+    	vue.afficherMessage("Choisir un pseudo : ");
     	
-    	// Récupération du pseudo pour créer le joueur 1
-    	do {
-    		vue.afficherMessage("Choisir un pseudo : ");
-        	pseudo = sc.next();
-    	}
-    	while(!testerChaine(pseudo));
+    	// Récupération du pseudo après test saisie pour créer le joueur 1
+    	String pseudo = recupererPseudo();
     	
     	joueur1 = new Joueur(pseudo);  	
     }
     
     public void demarrerSession() {
     	
-    	String saisie;
-    	int mode;
-    	session = true;
+    	int choix;
+     	session = true;    	
     	
-    	// Menu pour choisir un jeu
-    	do {    		
-    		vue.afficherMenuJeux(); 
-    		saisie = sc.next();
-    	}
-    	while(!testerChoixJeu(saisie));
-    	
-    	jeu = JeuFactory.getJeu(Integer.parseInt(saisie));
+    	// Choisir un jeu
+     	vue.afficherMenuJeux();
+    	choix = recupererChoixJeu();    	
+    	jeu = JeuFactory.getJeu(choix);    	
     	
     	// Menu pour choisir un mode
-    	do {
-    		vue.afficherMenuMode();
-    		saisie = sc.next();
-    	}
-    	while(!testerChoixMode(saisie));
+    	vue.afficherMenuMode();    	
+    	choix = recupererChoixMode();
     	
-    	mode = Integer.parseInt(saisie);
-    	
-    	switch (mode) {
+    	switch (choix) {
 	    	case 1 : {
 	    		modeChallenger();
 	    	}
@@ -150,35 +135,102 @@ public class ControleurJeu {
         // TODO implement here
     }
 
-    /**
-     * @param type 
-     * @param sasie
-     */
-    public void verifierSaisie(String type, String sasie) {
-        // TODO implement here
+    public String recupererPseudo() {
+    	
+    	String pseudo;
+    	boolean test;
+    	
+    	do {      		
+        	pseudo = sc.next();
+        	try {
+        		test = testerChaine(pseudo);
+        	}
+        	catch (Exception e) {
+        		test = false;
+        		System.err.println(e.getMessage());
+            	vue.afficherMessage("Choisir un pseudo : ");
+        	}        	
+    	}
+    	while(!test);
+    	
+    	return pseudo;    	
     }
     
-    public boolean testerChaine(String string) {			
+    public int recupererChoixJeu() {
+    	String saisie;
+    	boolean test;
+    	
+    	do {    		 
+    		saisie = sc.next();
+    		try {
+    			test = testerChoixJeu(saisie);
+    		}
+    		catch (Exception e) {
+        		test = false;
+        		System.err.println(e.getMessage());
+    	    	vue.afficherMenuJeux();
+    		}
+    	}
+    	while(!test);
+    	
+    	return Integer.parseInt(saisie);
+    }
+    
+    public int recupererChoixMode(){
+    	String saisie;
+    	boolean test;
+    	
+    	do {    		
+    		saisie = sc.next();
+    		try {
+    			test = testerChoixMode(saisie);
+    		}
+    		catch (Exception e) {
+        		test = false;
+        		System.err.println(e.getMessage());
+        		vue.afficherMenuMode();
+    		}
+    	}
+    	while(!test);
+    	
+    	return Integer.parseInt(saisie);
+    }
+    
+    public boolean testerChaine(String string) throws Exception {			
    	 
 		Pattern pattern = Pattern.compile("[a-zA-Z0-9àêëéèùü]+");
 		Matcher matcher = pattern.matcher(string);
 		boolean resultat = matcher.matches();
-		return resultat;    	
+		
+		if(!resultat) {
+			throw new Exception("Caractère non valide !");
+		}
+		return resultat;
+		    	
     }
     
-    public boolean testerChoixJeu(String string) {			
+    public boolean testerChoixJeu(String string) throws Exception {			
       	 
 		Pattern pattern = Pattern.compile("[12]{1}");
 		Matcher matcher = pattern.matcher(string);
 		boolean resultat = matcher.matches();
-		return resultat;    	
+		
+		if(!resultat) {
+			throw new Exception("Saisie incorrecte !");
+		}
+		return resultat;
+
     }
     
-    public boolean testerChoixMode(String string) {			
+    public boolean testerChoixMode(String string) throws Exception {			
      	 
 		Pattern pattern = Pattern.compile("[1-3]{1}");
 		Matcher matcher = pattern.matcher(string);
 		boolean resultat = matcher.matches();
+		
+		if(!resultat) {
+			throw new Exception("Saisie incorrecte !");
+		}
 		return resultat;    	
     }
 

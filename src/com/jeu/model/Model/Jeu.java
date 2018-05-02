@@ -6,12 +6,8 @@ import java.util.*;
 /**
  * 
  */
-public abstract class Jeu {
+public abstract class Jeu implements ProcessusJeu {
 	
-	public static final int COMBINAISON = 1;
-	public static final int MASTERMIND = 2;
-
-
     /**
      * 
      */
@@ -39,41 +35,5 @@ public abstract class Jeu {
 
 
 
-
-
-    /**
-     * 
-     */
-    public void initialiser() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void genererCombinaison() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void jouer() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void verifierResultat() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void verifierVictoire() {
-        // TODO implement here
-    }    
 
 }
