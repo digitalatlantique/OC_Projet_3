@@ -88,38 +88,36 @@ public class ControleurJeu {
     	choix = recupererChoixJeu();    	
     	jeu = JeuFactory.getJeu(choix);    	
     	
-    	// Menu pour choisir un mode
+    	// Choisir un mode
     	vue.afficherMenuMode();    	
     	choix = recupererChoixMode();
     	
-    	switch (choix) {
-	    	case 1 : {
-	    		modeChallenger();
-	    	}
-    	}
+    	demarrerJeu(choix);
     	
     }
-
-    /**
-     * 
-     */
-    public void modeChallenger() {
-        // TODO implement here
+    
+    public boolean demarrerJeu(int choixMode) {
+    	
+    	switch (choixMode) {
+    	case 1 : {
+    		jeu.modeChallenger();
+    		break;
+    	}
+    	
+    	case 2 : {
+    		System.out.println("En cours de développement");
+    		break;
+    	}
+    	
+    	case 3 : {
+    		System.out.println("En cours de développement");
+    		break;
+    	}
+	}
+    	
+    	return false;
     }
 
-    /**
-     * 
-     */
-    public void modeDefenseur() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void Duel() {
-        // TODO implement here
-    }
 
     /**
      * 
@@ -134,6 +132,8 @@ public class ControleurJeu {
     public void choixMode() {
         // TODO implement here
     }
+    
+
 
     public String recupererPseudo() {
     	
@@ -225,6 +225,18 @@ public class ControleurJeu {
     public boolean testerChoixMode(String string) throws Exception {			
      	 
 		Pattern pattern = Pattern.compile("[1-3]{1}");
+		Matcher matcher = pattern.matcher(string);
+		boolean resultat = matcher.matches();
+		
+		if(!resultat) {
+			throw new Exception("Saisie incorrecte !");
+		}
+		return resultat;    	
+    }
+    // TODO a finir
+    public boolean testerSaisieCombinaison(String string) throws Exception {			
+    	 
+		Pattern pattern = Pattern.compile("[0-9]{1}");
 		Matcher matcher = pattern.matcher(string);
 		boolean resultat = matcher.matches();
 		

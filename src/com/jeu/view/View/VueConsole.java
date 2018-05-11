@@ -35,6 +35,7 @@ public class VueConsole {
     	
     	System.out.println(message);
     }
+    
 
     /**
      * 
@@ -43,7 +44,7 @@ public class VueConsole {
     	String message = 	  "***********************************************************************\n"
 							+ "*                            Choisir un jeu                           *\n"
 							+ "*                                                                     *\n"
-							+ "* 1 : Recherche d'une combinaison avec +-                             *\n"
+							+ "* 1 : Recherche d'une combinaison avec +/-                            *\n"
 							+ "* 2 : Mastermind                                                      *\n"
 							+ "***********************************************************************";
     	System.out.println(message);
@@ -60,9 +61,20 @@ public class VueConsole {
 							+ "* 2 : Défenseur                                                       *\n"
 							+ "* 3 : Duel                                                            *\n"
 							+ "***********************************************************************";
-System.out.println(message);
+    	System.out.println(message);
     }
 
+    /**
+     * 
+     */
+    public void afficherJeuCombinaisonIntro() {
+    	String message = 	  "***********************************************************************\n"
+							+ "*               Découvrir la combinaison à l'aide de +/-              *\n"
+							+ "*                        Vous avez 12 essais                           *\n"
+							+ "*                           Bonne chance!                             *\n"
+							+ "***********************************************************************";
+    	System.out.println(message);
+    }
     /**
      * @param combinaison
      */

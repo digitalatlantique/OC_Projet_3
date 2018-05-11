@@ -6,7 +6,12 @@ import java.util.*;
 /**
  * 
  */
-public abstract class Jeu implements ProcessusJeu {
+public abstract class Jeu implements ModeJeu {
+	
+	/**
+	 * 
+	 */
+	protected Scanner sc;
 	
     /**
      * 
@@ -16,7 +21,7 @@ public abstract class Jeu implements ProcessusJeu {
     /**
      * 
      */
-    protected String combinaisonATrou;
+    protected String combinaisonReponse;
 
     /**
      * 
@@ -26,14 +31,32 @@ public abstract class Jeu implements ProcessusJeu {
     /**
      * 
      */
-    protected char[] combinaisonTab;
+    protected char[] combinaisonSecreteTab;
+    
+    /**
+     * 
+     */
+    protected char[] combinaisonReponseTab;
 
     /**
      * 
      */
     protected boolean[] combinaisonTest;
+    
+    /**
+     * 
+     */
+    protected boolean partie;
 
 
-
+    protected static int longueurCombinaison = 4;
+    
+    protected static int nombreEssais = 12;
+    
+    public abstract void initialiser();
+    public abstract String genererCombinaison(int longueur);
+    public abstract boolean jouer();
+    public abstract void verifierResultat();
+    public abstract boolean verifierVictoire();    
 
 }

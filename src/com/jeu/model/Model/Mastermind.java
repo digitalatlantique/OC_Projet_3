@@ -21,9 +21,9 @@ public class Mastermind extends Jeu {
 	}
 
 	@Override
-	public int genererCombinaison() {
+	public String genererCombinaison(int longueur) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
@@ -33,15 +33,33 @@ public class Mastermind extends Jeu {
 	}
 
 	@Override
-	public boolean verifierResultat() {
+	public void verifierResultat() {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
 	public boolean verifierVictoire() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void modeChallenger() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modeDefenseur() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void duel() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
