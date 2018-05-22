@@ -1,17 +1,11 @@
-package com.jeu.model.Model;
+package com.jeu.model;
 
 
-import java.util.*;
 
 /**
  * 
  */
-public abstract class Jeu implements ModeJeu {
-	
-	/**
-	 * 
-	 */
-	protected Scanner sc;
+public abstract class Jeu {
 	
     /**
      * 
@@ -22,11 +16,6 @@ public abstract class Jeu implements ModeJeu {
      * 
      */
     protected String combinaisonReponse;
-
-    /**
-     * 
-     */
-    protected String saisie;
 
     /**
      * 
@@ -43,20 +32,28 @@ public abstract class Jeu implements ModeJeu {
      */
     protected boolean[] combinaisonTest;
     
-    /**
-     * 
-     */
-    protected boolean partie;
 
 
-    protected static int longueurCombinaison = 4;
+
+    public static int longueurCombinaison = 4;
     
-    protected static int nombreEssais = 12;
+    public static int nombreEssais = 10;
     
     public abstract void initialiser();
     public abstract String genererCombinaison(int longueur);
-    public abstract boolean jouer();
-    public abstract void verifierResultat();
-    public abstract boolean verifierVictoire();    
+    
+    public String getCombinaisonSecrete() {
+		return combinaisonSecrete;
+	}
+	public char[] getCombinaisonReponseTab() {
+		return combinaisonReponseTab;
+	}
+
+	public char[] getCombinaisonSecreteTab() {
+		return combinaisonSecreteTab;
+	}
+	public boolean[] getCombinaisonTest() {
+		return combinaisonTest;
+	}    
 
 }

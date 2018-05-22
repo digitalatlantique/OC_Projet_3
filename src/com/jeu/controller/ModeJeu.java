@@ -1,4 +1,4 @@
-package com.jeu.model.Model;
+package com.jeu.controller;
 
 public interface ModeJeu {
 	

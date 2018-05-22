@@ -1,7 +1,4 @@
-package com.jeu.view.View;
-
-
-import java.util.*;
+package com.jeu.view;
 
 /**
  * 
@@ -13,11 +10,6 @@ public class VueConsole {
      */
     public VueConsole() {
     }
-
-    /**
-     * 
-     */
-    private Scanner scanner;
     
     /**
      * 
@@ -26,7 +18,7 @@ public class VueConsole {
     	
     	String message = 	"***********************************************************************\n"
     						+"*                            Bienvenue !                              *\n"
-    						+"*      Cette application vous propose des jeux de logique.            *\n"
+    						+"*      Cette application vous propose des jeux de combibaison.        *\n"
     						+"***********************************************************************";    	
     	System.out.println(message);
     }
@@ -49,6 +41,13 @@ public class VueConsole {
 							+ "***********************************************************************";
     	System.out.println(message);
     }
+    
+    public void afficherChoixSession() {
+    	String message = "1 : Joueur\n"
+						+"2 : Développeur";
+    	
+    	System.out.println(message);
+    }
 
     /**
      * 
@@ -67,10 +66,10 @@ public class VueConsole {
     /**
      * 
      */
-    public void afficherJeuCombinaisonIntro() {
+    public void afficherJeuCombinaisonIntro(int nombreEssais) {
     	String message = 	  "***********************************************************************\n"
 							+ "*               Découvrir la combinaison à l'aide de +/-              *\n"
-							+ "*                        Vous avez 12 essais                           *\n"
+							+ "*                        Vous avez " + nombreEssais + " essai(s)                       *\n"
 							+ "*                           Bonne chance!                             *\n"
 							+ "***********************************************************************";
     	System.out.println(message);

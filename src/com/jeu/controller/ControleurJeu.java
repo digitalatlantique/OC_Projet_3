@@ -1,27 +1,25 @@
-package com.jeu.controller.Controlleur;
+package com.jeu.controller;
 
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.jeu.model.Model.Jeu;
-import com.jeu.model.Model.JeuFactory;
-import com.jeu.model.Model.Joueur;
-import com.jeu.view.View.VueConsole;
+import com.jeu.controller.ControleurJeuFactory;
+
+import com.jeu.model.Joueur;
+import com.jeu.view.VueConsole;
 
 /**
  * 
  */
-public class ControleurJeu {
+public abstract class ControleurJeu implements ModeJeu {
 
     /**
      * Default constructor
      */
     public ControleurJeu() {
-    	
-    	vue = new VueConsole();
-    	sc = new Scanner(System.in);
+
     }
 
     /**
@@ -37,70 +35,82 @@ public class ControleurJeu {
     /**
      * 
      */
-    private Jeu jeu;
+    private static ControleurJeu controleurJeu;
 
     /**
      * 
      */
-    private VueConsole vue;
+    protected static VueConsole vue;
     
     /**
      * 
      */
-    private static Scanner sc;
+    protected static Scanner sc;
     
     /**
      * 
      */
-    private boolean session;
+    private static boolean session;
     
-
-
-
+    /**
+     * 
+     */
+    protected boolean partie;
+    
+    protected static boolean ChoixModeSession;
+    
+    /**
+     * 
+     */
+    protected String saisie;
+    
     public static void main(String[] args) {
-    	
-    	
-    	ControleurJeu cJeu = new ControleurJeu();
-    	cJeu.initialiserSession();
-    	cJeu.demarrerSession();
+
+    	ControleurJeu.initialiserSession();
+    	ControleurJeu.demarrerSession();
     	
     }
     
-    public void initialiserSession() {
+    public abstract boolean jouer();
+    public abstract void verifierResultat();
+    public abstract boolean verifierVictoire();
+    
+    public static void initialiserSession() {
+    	
+    	vue = new VueConsole();
+    	sc = new Scanner(System.in);
     	
     	// Affichage d'un message d'accueil
     	vue.afficherAccueil();
-    	vue.afficherMessage("Choisir un pseudo : ");
+    	vue.afficherChoixSession();
     	
-    	// Récupération du pseudo après test saisie pour créer le joueur 1
-    	String pseudo = recupererPseudo();
-    	
-    	joueur1 = new Joueur(pseudo);  	
+    	// Récupération du choix de session (Joueur / développeur)
+    	initialiserChoixSession();  	
     }
     
-    public void demarrerSession() {
+    public static void demarrerSession() {
     	
     	int choix;
      	session = true;    	
     	
     	// Choisir un jeu
      	vue.afficherMenuJeux();
-    	choix = recupererChoixJeu();    	
-    	jeu = JeuFactory.getJeu(choix);    	
+    	choix = choixJeu();    	
+    	controleurJeu = ControleurJeuFactory.getJeuControleur(choix);    	
     	
     	// Choisir un mode
     	vue.afficherMenuMode();    	
-    	choix = recupererChoixMode();
+    	choix = choixMode();
     	
     	demarrerJeu(choix);
     	
     }
     
-    public boolean demarrerJeu(int choixMode) {
+    public static boolean demarrerJeu(int choixMode) {
     	
     	switch (choixMode) {
     	case 1 : {
-    		jeu.modeChallenger();
+    		controleurJeu.modeChallenger();
     		break;
     	}
     	
@@ -122,52 +132,19 @@ public class ControleurJeu {
     /**
      * 
      */
-    public void choixJeu() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void choixMode() {
-        // TODO implement here
-    }
-    
-
-
-    public String recupererPseudo() {
+    public static int choixJeu() {
     	
-    	String pseudo;
-    	boolean test;
-    	
-    	do {      		
-        	pseudo = sc.next();
-        	try {
-        		test = testerChaine(pseudo);
-        	}
-        	catch (Exception e) {
-        		test = false;
-        		System.err.println(e.getMessage());
-            	vue.afficherMessage("Choisir un pseudo : ");
-        	}        	
-    	}
-    	while(!test);
-    	
-    	return pseudo;    	
-    }
-    
-    public int recupererChoixJeu() {
     	String saisie;
     	boolean test;
     	
     	do {    		 
     		saisie = sc.next();
     		try {
-    			test = testerChoixJeu(saisie);
+    			test = testerChoix(saisie);
     		}
     		catch (Exception e) {
         		test = false;
-        		System.err.println(e.getMessage());
+        		System.out.println(e.getMessage());
     	    	vue.afficherMenuJeux();
     		}
     	}
@@ -175,8 +152,12 @@ public class ControleurJeu {
     	
     	return Integer.parseInt(saisie);
     }
-    
-    public int recupererChoixMode(){
+
+    /**
+     * 
+     */
+    public static int choixMode() {
+
     	String saisie;
     	boolean test;
     	
@@ -187,7 +168,7 @@ public class ControleurJeu {
     		}
     		catch (Exception e) {
         		test = false;
-        		System.err.println(e.getMessage());
+        		System.out.println(e.getMessage());
         		vue.afficherMenuMode();
     		}
     	}
@@ -196,7 +177,36 @@ public class ControleurJeu {
     	return Integer.parseInt(saisie);
     }
     
-    public boolean testerChaine(String string) throws Exception {			
+
+
+    public static void initialiserChoixSession() {
+    	
+    	String saisie;
+    	boolean test;
+    	
+    	do {      		
+    		saisie = sc.next();
+        	try {
+        		test = testerChaine(saisie);
+        		
+        		if(saisie.equals("1")) {
+        			ChoixModeSession = false;        			
+        		}
+        		else {
+        			ChoixModeSession = true;
+        		}
+        	}
+        	catch (Exception e) {
+        		test = false;
+        		System.out.println(e.getMessage());
+            	vue.afficherChoixSession();
+        	}        	
+    	}
+    	while(!test);
+   	
+    }
+  
+    public static boolean testerChaine(String string) throws Exception {			
    	 
 		Pattern pattern = Pattern.compile("[a-zA-Z0-9àêëéèùü]+");
 		Matcher matcher = pattern.matcher(string);
@@ -209,27 +219,27 @@ public class ControleurJeu {
 		    	
     }
     
-    public boolean testerChoixJeu(String string) throws Exception {			
+    public static boolean testerChoix(String string) throws Exception {			
       	 
 		Pattern pattern = Pattern.compile("[12]{1}");
 		Matcher matcher = pattern.matcher(string);
 		boolean resultat = matcher.matches();
 		
 		if(!resultat) {
-			throw new Exception("Saisie incorrecte !");
+			throw new Exception("Saisie incorrecte, choisir 1 ou 2 !");
 		}
 		return resultat;
 
     }
     
-    public boolean testerChoixMode(String string) throws Exception {			
+    public static boolean testerChoixMode(String string) throws Exception {			
      	 
 		Pattern pattern = Pattern.compile("[1-3]{1}");
 		Matcher matcher = pattern.matcher(string);
 		boolean resultat = matcher.matches();
 		
 		if(!resultat) {
-			throw new Exception("Saisie incorrecte !");
+			throw new Exception("Saisie incorrecte, choisir 1 - 2 ou 3 !");
 		}
 		return resultat;    	
     }
@@ -241,7 +251,7 @@ public class ControleurJeu {
 		boolean resultat = matcher.matches();
 		
 		if(!resultat) {
-			throw new Exception("Saisie incorrecte !");
+			throw new Exception("Saisie incorrecte, saisir un chiffre !");
 		}
 		return resultat;    	
     }
