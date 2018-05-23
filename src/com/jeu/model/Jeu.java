@@ -31,8 +31,6 @@ public abstract class Jeu {
      * 
      */
     protected boolean[] combinaisonTest;
-    
-
 
 
     public static int longueurCombinaison = 4;

@@ -25,8 +25,7 @@ public class Combinaison extends Jeu {
 
 	@Override
 	public String genererCombinaison(int longueur) {
-		
-		System.out.println("Génère la combi");
+
 		String combinaison = "";
 		int temp;
 		

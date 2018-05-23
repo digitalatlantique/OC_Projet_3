@@ -115,7 +115,7 @@ public abstract class ControleurJeu implements ModeJeu {
     	}
     	
     	case 2 : {
-    		System.out.println("En cours de développement");
+    		controleurJeu.modeDefenseur();
     		break;
     	}
     	

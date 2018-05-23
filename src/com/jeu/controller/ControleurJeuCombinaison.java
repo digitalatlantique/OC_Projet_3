@@ -49,7 +49,18 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 		
 		if(ChoixModeSession) {
 			vue.afficherMessage("Mode Développeur, la solution est : " + jeuCombinaison.getCombinaisonSecrete());
-		}
+		}		
+
+		saisirCombinaison();
+    	verifierResultat();
+    	test = verifierVictoire();
+
+    	return test;
+	}
+	
+	public void saisirCombinaison() {
+		
+		boolean test;
 		
     	vue.afficherMessage("Choisir une combinaison à : " + Jeu.longueurCombinaison + " chiffres.");
     	
@@ -67,27 +78,6 @@ public class ControleurJeuCombinaison extends ControleurJeu {
     	}
     	while(!test);
 		
-    	verifierResultat();
-    	
-    	if(verifierVictoire()) {
-    		vue.afficherMessage("gagné");
-    		vue.afficherMessage(jeuCombinaison.getCombinaisonSecrete());
-    		return false;
-    	}
-    	else if (Jeu.nombreEssais == 1) {
-    		vue.afficherMessage("Perdu");
-    		vue.afficherMessage("La combinaison est : " + jeuCombinaison.getCombinaisonSecrete());
-    		return false;
-    	}
-    	
-    	else {
-    		Jeu.nombreEssais--;
-    		vue.afficherMessage("il vous reste : " + Jeu.nombreEssais + " essai(s)");
-    		vue.afficherMessage("Indice : " + new String(jeuCombinaison.getCombinaisonReponseTab()));
-    		
-    		return true;
-    	}
-    	
 	}
 
 	@Override
@@ -123,7 +113,26 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 		for(int i=0; i<jeuCombinaison.getCombinaisonTest().length; i++) {
 			resultat = resultat && jeuCombinaison.getCombinaisonTest()[i];
 		}
-		return resultat;
+		
+    	if(resultat) {
+    		vue.afficherMessage("gagné");
+    		vue.afficherMessage(jeuCombinaison.getCombinaisonSecrete());
+    		return false;
+    	}
+    	else if (Jeu.nombreEssais == 1) {
+    		vue.afficherMessage("Perdu");
+    		vue.afficherMessage("La combinaison est : " + jeuCombinaison.getCombinaisonSecrete());
+    		return false;
+    	}
+    	
+    	else {
+    		Jeu.nombreEssais--;
+    		vue.afficherMessage("il vous reste : " + Jeu.nombreEssais + " essai(s)");
+    		vue.afficherMessage("Indice : " + new String(jeuCombinaison.getCombinaisonReponseTab()));
+    		
+    		return true;
+    	}
+		
 	}
 	
     public boolean testerCombinaisonSaisie(String string, int longueur) throws Exception {			
