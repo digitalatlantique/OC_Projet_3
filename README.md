@@ -2,6 +2,12 @@
 
 Compétences à valider : Mise en oeuvre des concepts fondamentaux de la programmation en Java
 
+Java Runtime Environment : JRE 9.0.1
+
+Disponible dans ce projet:
+- un diagramme de classe	=> diagrammes/ClassDiagram.png
+- Les sources
+
 
 Contexte :
 
