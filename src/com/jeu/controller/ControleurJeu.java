@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.jeu.controller.ControleurJeuFactory;
-
+import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
 import com.jeu.view.VueConsole;
 
@@ -25,12 +25,12 @@ public abstract class ControleurJeu implements ModeJeu {
     /**
      * 
      */
-    protected ControleurJoueur joueurAttaque;
+    protected ControleurJoueur joueur1;
     
     /**
      * 
      */
-    protected ControleurJoueur joueurDefend;
+    protected ControleurJoueur joueur2;
 
     /**
      * 
@@ -84,7 +84,7 @@ public abstract class ControleurJeu implements ModeJeu {
     }
     
     public abstract boolean jouer();
-    public abstract boolean verifierVictoire(Joueur joueur);
+    public abstract boolean verifierVictoire(Joueur joueur, Jeu jeu);
     
     public static void initialiserSession() {
     	

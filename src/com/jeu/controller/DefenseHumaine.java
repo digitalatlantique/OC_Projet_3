@@ -13,7 +13,7 @@ public class DefenseHumaine extends Defense {
 		boolean test;
 		String cle = new String("combinaisonReponse");
 
-		vue.afficherMessage("Joueur machine propose : " + proposition);		
+		vue.afficherMessage("Votre adversaire propose : " + proposition);		
 		vue.afficherMessage("Indiqué à l'aide de + - ou = la bonne combinaison d'une longueur de " + Jeu.longueurCombinaison + " éléments");
 		
 		do {
@@ -50,7 +50,7 @@ public class DefenseHumaine extends Defense {
 		
 		boolean test;
 				
-		vue.afficherMessage("Saisir une combinaison composée de " + longueur + " chiffres");
+		vue.afficherMessage("Faire deviner une combinaison composée de " + longueur + " chiffres");
 		
 		do {			
 			saisie = sc.next();
@@ -61,7 +61,7 @@ public class DefenseHumaine extends Defense {
 			catch (Exception e) {
         		test = false;
         		System.out.println(e.getMessage());
-        		vue.afficherMessage("Saisir une combinaison valide, composée de " + longueur + " chiffres");
+        		vue.afficherMessage("Faire deviner une combinaison valide, composée de " + longueur + " chiffres");
 			}
 			
 		}

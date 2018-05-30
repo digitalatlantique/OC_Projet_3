@@ -9,20 +9,26 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 
 	public ControleurJeuCombinaison() {
 
-		this.jeuCombinaison = new Combinaison();
 	}
 	
-	private Jeu jeuCombinaison;
+	private Jeu jeuCombinaison1;
+	private Jeu jeuCombinaison2;
+	private boolean modeDuel;
+	private Joueur joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
+	private Joueur joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
 
 	@Override
 	public void modeChallenger() {
+
+		modeDuel = false;
+		// Le joueur George est en mode attaque
+		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine());
+		// Le joueur T800 est en mode défense
+		joueur2 = new ControleurJoueur(joueurM, new DefenseMCombinaison());
 		
-		Joueur joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
-		Joueur joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
+		jeuCombinaison1 = new Combinaison();
+		jeuCombinaison1.initialiser(joueur2.donnerCombinaison());
 		
-		joueurAttaque = new ControleurJoueur(joueurH, new AttaqueHumaine());
-		joueurDefend = new ControleurJoueur(joueurM, new DefenseMCombinaison());
-		jeuCombinaison.initialiser(joueurDefend.donnerCombinaison());
 		tourDeJeu = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
@@ -37,12 +43,16 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 	@Override
 	public void modeDefenseur() {
 
-		Joueur joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
-		Joueur joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
+
+		modeDuel = false;
+		// Le joueur T800 attaque
+		joueur1 = new ControleurJoueur(joueurM, new AttaqueMCombinaison());
+		// Le joueur George défend
+		joueur2 = new ControleurJoueur(joueurH, new DefenseHumaine());
 		
-		joueurAttaque = new ControleurJoueur(joueurM, new AttaqueMCombinaison());
-		joueurDefend = new ControleurJoueur(joueurH, new DefenseHumaine());
-		jeuCombinaison.initialiser(joueurDefend.donnerCombinaison());
+		jeuCombinaison1 = new Combinaison();
+		jeuCombinaison1.initialiser(joueur2.donnerCombinaison());
+		
 		tourDeJeu = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
@@ -50,13 +60,31 @@ public class ControleurJeuCombinaison extends ControleurJeu {
     	do {
     		tourDeJeu = jouer();
     	}
-    	while(tourDeJeu);
-		
+    	while(tourDeJeu);		
 	}
 
 	@Override
 	public void duel() {
-		// TODO Auto-generated method stub
+		
+		modeDuel = true;
+		// Joueur1 (Goerge) affronte Joueur2 (T800)
+		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaine());
+		joueur2 = new ControleurJoueur(joueurM, new AttaqueMCombinaison(), new DefenseMCombinaison() );
+		// T800 Initialise une combinaison
+		jeuCombinaison1 = new Combinaison();
+		jeuCombinaison1.initialiser(joueur2.donnerCombinaison());
+		// George Initialise une combinaison
+		jeuCombinaison2 = new Combinaison();
+		jeuCombinaison2.initialiser(joueur1.donnerCombinaison());
+		
+		tourDeJeu = true;
+		
+		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
+		
+    	do {
+    		tourDeJeu = jouer();
+    	}
+    	while(tourDeJeu);	
 		
 	}
 
@@ -65,44 +93,81 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 
 		boolean test;
 		
-		if(ChoixModeSession) {
-			vue.afficherMessage("Mode Développeur, la solution est : " + jeuCombinaison.getCombinaisonSecrete());
-		}
+
 		
-		proposition = joueurAttaque.propose(jeuCombinaison.getCombinaisonReponseMap());
-		joueurDefend.analyse(jeuCombinaison, proposition);
+		if(modeDuel) {
+			
+			// Affiche la solution en mode développeur
+			if(ChoixModeSession) {
+				vue.afficherMessage("Mode Développeur :\n"
+									+ "la solution de " + joueur1.getJoueur().getType() + " est : " + jeuCombinaison1.getCombinaisonSecrete() + "\n"
+									+ "la solution de " + joueur2.getJoueur().getType() + " est : " + jeuCombinaison2.getCombinaisonSecrete());
+			}
+			// Le joueur1 propose en fonction de l'indication du défenseur 
+			proposition = joueur1.propose(jeuCombinaison1.getCombinaisonReponseMap());
+			// Le joueur2 analyse la proposition et retourne une indication
+			joueur2.analyse(jeuCombinaison1, proposition);
+			test = verifierVictoire(joueur1.getJoueur(), jeuCombinaison1);
 
-		test = verifierVictoire(joueurAttaque.getJoueur());	
+			if(!test) {
+				return test;
+			}
+			
+			// Le joueur2 propose en fonction de l'indication du défenseur 
+			proposition = joueur2.propose(jeuCombinaison2.getCombinaisonReponseMap());
+			// Le joueur1 analyse la proposition et retourne une indication
+			joueur1.analyse(jeuCombinaison2, proposition);
+			test = verifierVictoire(joueur2.getJoueur(), jeuCombinaison2);
+			return test;
 
-		return test;
+			
+		}
+		else {
+			
+			// Affiche la solution en mode développeur
+			if(ChoixModeSession) {
+				vue.afficherMessage("Mode Développeur, la solution est : " + jeuCombinaison1.getCombinaisonSecrete());
+			}
+			// Le joueur1 propose en fonction de l'indication du défenseur 
+			proposition = joueur1.propose(jeuCombinaison1.getCombinaisonReponseMap());
+			// Le joueur2 analyse la proposition et retourne une indication
+			joueur2.analyse(jeuCombinaison1, proposition);
 
+			test = verifierVictoire(joueur1.getJoueur(), jeuCombinaison1);	
+
+			return test;
+			
+		}
 	}
 
 	@Override
-	public boolean verifierVictoire(Joueur joueur) {
+	public boolean verifierVictoire(Joueur joueur, Jeu jeu) {
 		
 		boolean resultat = true;
 		
-		for(int i=0; i<jeuCombinaison.getCombinaisonTest().length; i++) {
-			resultat = resultat && jeuCombinaison.getCombinaisonTest()[i];
+		for(int i=0; i<jeu.getCombinaisonTest().length; i++) {
+			resultat = resultat && jeu.getCombinaisonTest()[i];
 		}
 		
     	if(resultat) {
     		vue.afficherMessage(joueur.getType() + " a gagné !!");
-    		vue.afficherMessage("La combinaison est : " + jeuCombinaison.getCombinaisonSecrete());
+    		vue.afficherMessage("La combinaison est : " + jeu.getCombinaisonSecrete());
     		return false;
     	}
     	else if (joueur.getNombreEssais() == 1) {
     		vue.afficherMessage(joueur.getType() + " a Perdu");
-    		vue.afficherMessage("La combinaison est : " + jeuCombinaison.getCombinaisonSecrete());
+    		vue.afficherMessage("La combinaison est : " + jeu.getCombinaisonSecrete());
     		return false;
     	}
     	
     	else {
     		joueur.setNombreEssais(joueur.getNombreEssais() - 1);
-    		
+    		vue.afficherMessage("***********************************************************************");
+    		vue.afficherMessage("                           " + joueur.getType());
     		vue.afficherMessage("il vous reste : " + joueur.getNombreEssais() + " essai(s)");
-    		vue.afficherMessage("Indice : " + new String(jeuCombinaison.getCombinaisonReponseTab()));
+    		vue.afficherMessage("Votre proposition : " + proposition);
+    		vue.afficherMessage("Indice : " + new String(jeu.getCombinaisonReponseTab()));
+    		vue.afficherMessage("***********************************************************************");
     		
     		return true;
     	}
