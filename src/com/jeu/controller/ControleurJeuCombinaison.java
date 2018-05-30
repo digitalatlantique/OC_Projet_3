@@ -1,10 +1,9 @@
 package com.jeu.controller;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.jeu.model.Combinaison;
 import com.jeu.model.Jeu;
+import com.jeu.model.Joueur;
+import com.jeu.model.TypeJoueur;
 
 public class ControleurJeuCombinaison extends ControleurJeu {
 
@@ -17,8 +16,13 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 
 	@Override
 	public void modeChallenger() {
-
-		jeuCombinaison.initialiser();
+		
+		Joueur joueurH = new Joueur(TypeJoueur.humain, Jeu.nombreEssais);
+		Joueur joueurM = new Joueur(TypeJoueur.machine, Jeu.nombreEssais);
+		
+		joueurAttaque = new ControleurJoueur(joueurH, new AttaqueHumaine());
+		joueurDefend = new ControleurJoueur(joueurM, new DefenseMCombinaison());
+		jeuCombinaison.initialiser(joueurDefend.donnerCombinaison());
 		partie = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
@@ -32,7 +36,21 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 
 	@Override
 	public void modeDefenseur() {
-		// TODO Auto-generated method stub
+
+		Joueur joueurH = new Joueur(TypeJoueur.humain, Jeu.nombreEssais);
+		Joueur joueurM = new Joueur(TypeJoueur.machine, Jeu.nombreEssais);
+		
+		joueurAttaque = new ControleurJoueur(joueurM, new AttaqueMCombinaison());
+		joueurDefend = new ControleurJoueur(joueurH, new DefenseHumaine());
+		jeuCombinaison.initialiser(joueurDefend.donnerCombinaison());
+		partie = true;
+		
+		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
+		
+    	do {
+    		partie = jouer();
+    	}
+    	while(partie);
 		
 	}
 
@@ -49,64 +67,19 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 		
 		if(ChoixModeSession) {
 			vue.afficherMessage("Mode Développeur, la solution est : " + jeuCombinaison.getCombinaisonSecrete());
-		}		
-
-		saisirCombinaison();
-    	verifierResultat();
-    	test = verifierVictoire();
-
-    	return test;
-	}
-	
-	public void saisirCombinaison() {
-		
-		boolean test;
-		
-    	vue.afficherMessage("Choisir une combinaison à : " + Jeu.longueurCombinaison + " chiffres.");
-    	
-    	do {
-    		
-    		saisie = sc.next();
-    		try {
-    			test = testerCombinaisonSaisie(saisie, Jeu.longueurCombinaison);
-    		}
-    		catch(Exception e) {
-    			test = false;
-    			System.out.println(e.getMessage());
-    			vue.afficherMessage("Choisir une combinaison à : " + Jeu.longueurCombinaison + " chiffres.");
-    		}    		
-    	}
-    	while(!test);
-		
-	}
-
-	@Override
-	public void verifierResultat() {
-		
-		int resultat;
-		
-		for(int i=0; i<saisie.length(); i++) {
-			
-			resultat = Character.compare(saisie.charAt(i), jeuCombinaison.getCombinaisonSecreteTab()[i]);
-			
-			if(resultat < 0) {
-				jeuCombinaison.getCombinaisonReponseTab()[i] = '+';
-				jeuCombinaison.getCombinaisonTest()[i] = false;
-			}
-			
-			else if (resultat > 0){
-				jeuCombinaison.getCombinaisonReponseTab()[i] = '-';
-				jeuCombinaison.getCombinaisonTest()[i] = false;
-			}
-			else {
-				jeuCombinaison.getCombinaisonReponseTab()[i] = '=';
-				jeuCombinaison.getCombinaisonTest()[i] = true;
-			}
 		}
+		
+		proposition = joueurAttaque.propose(jeuCombinaison.getCombinaisonReponseMap());
+		joueurDefend.analyse(jeuCombinaison, proposition);
+
+		test = verifierVictoire(joueurAttaque.getJoueur());	
+
+		return test;
+
 	}
 
 	@Override
-	public boolean verifierVictoire() {
+	public boolean verifierVictoire(Joueur joueur) {
 		
 		boolean resultat = true;
 		
@@ -115,36 +88,25 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 		}
 		
     	if(resultat) {
-    		vue.afficherMessage("gagné");
-    		vue.afficherMessage(jeuCombinaison.getCombinaisonSecrete());
+    		vue.afficherMessage(joueur.getType() + " a gagné !!");
+    		vue.afficherMessage("La combinaison est : " + jeuCombinaison.getCombinaisonSecrete());
     		return false;
     	}
-    	else if (Jeu.nombreEssais == 1) {
-    		vue.afficherMessage("Perdu");
+    	else if (joueur.getNombreEssais() == 1) {
+    		vue.afficherMessage(joueur.getType() + " a Perdu");
     		vue.afficherMessage("La combinaison est : " + jeuCombinaison.getCombinaisonSecrete());
     		return false;
     	}
     	
     	else {
-    		Jeu.nombreEssais--;
-    		vue.afficherMessage("il vous reste : " + Jeu.nombreEssais + " essai(s)");
+    		joueur.setNombreEssais(joueur.getNombreEssais() - 1);
+    		
+    		vue.afficherMessage("il vous reste : " + joueur.getNombreEssais() + " essai(s)");
     		vue.afficherMessage("Indice : " + new String(jeuCombinaison.getCombinaisonReponseTab()));
     		
     		return true;
     	}
 		
 	}
-	
-    public boolean testerCombinaisonSaisie(String string, int longueur) throws Exception {			
-   	 
-		Pattern pattern = Pattern.compile("[0-9]{" + longueur + "}");
-		Matcher matcher = pattern.matcher(string);
-		boolean resultat = matcher.matches();
-		
-		if(!resultat) {
-			throw new Exception("Saisie incorrecte !");
-		}
-		return resultat;    	
-    }
 
 }

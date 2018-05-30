@@ -1,5 +1,6 @@
 package com.jeu.model;
 
+import java.util.HashMap;
 
 /**
  * 
@@ -14,11 +15,12 @@ public class Combinaison extends Jeu {
     }
 
 	@Override
-	public void initialiser() {
+	public void initialiser(String combinaison) {
 		
-		combinaisonSecrete = genererCombinaison(longueurCombinaison);
+		combinaisonSecrete = combinaison;
 		combinaisonSecreteTab = this.combinaisonSecrete.toCharArray();
 		combinaisonReponseTab = new char[longueurCombinaison];
+		combinaisonReponseMap = new HashMap<String, String>(); 
 		combinaisonTest = new boolean[longueurCombinaison];
 		
 	}
@@ -34,7 +36,7 @@ public class Combinaison extends Jeu {
 			temp = genererNombre(0, 9);
 			combinaison += String.valueOf(temp);
 		}
-		System.out.println("la combi : " + combinaison);
+
 		return combinaison;
 	}
 	

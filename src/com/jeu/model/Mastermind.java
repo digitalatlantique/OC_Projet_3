@@ -15,7 +15,7 @@ public class Mastermind extends Jeu {
     }
 
 	@Override
-	public void initialiser() {
+	public void initialiser(String combinaison) {
 		// TODO Auto-generated method stub
 		
 	}

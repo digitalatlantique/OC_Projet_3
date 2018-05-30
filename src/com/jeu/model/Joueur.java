@@ -14,31 +14,25 @@ public class Joueur {
     public Joueur() {
     }
     
-    /**
-     * 
-     * @param pseudo
-     */
-    public Joueur(String pseudo) {
-    	this.pseudo = pseudo;
+    public Joueur(TypeJoueur type, int nombreEssais) {
+    	
+    	this.type = type;
+    	this.nombreEssais = nombreEssais;
     }
+    
 
     /**
      * 
      */
-    private String pseudo;
+    protected int nombreEssais;
+
 
     /**
      * 
      */
-    private TypeJoueur type;
+    protected TypeJoueur type;
 
-	public String getPseudo() {
-		return pseudo;
-	}
 
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
-	}
 
 	public TypeJoueur getType() {
 		return type;
@@ -46,6 +40,14 @@ public class Joueur {
 
 	public void setType(TypeJoueur type) {
 		this.type = type;
+	}
+
+	public int getNombreEssais() {
+		return nombreEssais;
+	}
+
+	public void setNombreEssais(int nombreEssais) {
+		this.nombreEssais = nombreEssais;
 	}
 
 

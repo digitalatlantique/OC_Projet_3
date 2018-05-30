@@ -1,5 +1,7 @@
 package com.jeu.controller;
 
+import com.jeu.model.Joueur;
+
 public class ControleurJeuMastermind extends ControleurJeu {
 
 	@Override
@@ -26,14 +28,9 @@ public class ControleurJeuMastermind extends ControleurJeu {
 		return false;
 	}
 
-	@Override
-	public void verifierResultat() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
-	public boolean verifierVictoire() {
+	public boolean verifierVictoire(Joueur joueur) {
 		// TODO Auto-generated method stub
 		return false;
 	}

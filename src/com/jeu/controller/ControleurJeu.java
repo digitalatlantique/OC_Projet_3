@@ -25,12 +25,12 @@ public abstract class ControleurJeu implements ModeJeu {
     /**
      * 
      */
-    private Joueur joueur1;
+    protected ControleurJoueur joueurAttaque;
     
     /**
      * 
      */
-    private Joueur joueur2;
+    protected ControleurJoueur joueurDefend;
 
     /**
      * 
@@ -57,12 +57,20 @@ public abstract class ControleurJeu implements ModeJeu {
      */
     protected boolean partie;
     
+    /**
+     * Définit le choix mode développeur ou normal
+     */
     protected static boolean ChoixModeSession;
+    
+    /**
+     * Définit le choix mode de jeu : challenger, défenseur, duel
+     */
+    protected int modeJeu;
     
     /**
      * 
      */
-    protected String saisie;
+    protected String proposition;
     
     public static void main(String[] args) {
 
@@ -72,8 +80,7 @@ public abstract class ControleurJeu implements ModeJeu {
     }
     
     public abstract boolean jouer();
-    public abstract void verifierResultat();
-    public abstract boolean verifierVictoire();
+    public abstract boolean verifierVictoire(Joueur joueur);
     
     public static void initialiserSession() {
     	
@@ -109,21 +116,22 @@ public abstract class ControleurJeu implements ModeJeu {
     public static boolean demarrerJeu(int choixMode) {
     	
     	switch (choixMode) {
-    	case 1 : {
-    		controleurJeu.modeChallenger();
-    		break;
-    	}
     	
-    	case 2 : {
-    		controleurJeu.modeDefenseur();
-    		break;
+	    	case 1 : {
+	    		controleurJeu.modeChallenger();
+	    		break;
+	    	}
+	    	
+	    	case 2 : {
+	    		controleurJeu.modeDefenseur();
+	    		break;
+	    	}
+	    	
+	    	case 3 : {
+	    		System.out.println("En cours de développement");
+	    		break;
+	    	}
     	}
-    	
-    	case 3 : {
-    		System.out.println("En cours de développement");
-    		break;
-    	}
-	}
     	
     	return false;
     }
@@ -187,7 +195,7 @@ public abstract class ControleurJeu implements ModeJeu {
     	do {      		
     		saisie = sc.next();
         	try {
-        		test = testerChaine(saisie);
+        		test = testerChoix(saisie);
         		
         		if(saisie.equals("1")) {
         			ChoixModeSession = false;        			
@@ -204,19 +212,6 @@ public abstract class ControleurJeu implements ModeJeu {
     	}
     	while(!test);
    	
-    }
-  
-    public static boolean testerChaine(String string) throws Exception {			
-   	 
-		Pattern pattern = Pattern.compile("[a-zA-Z0-9àêëéèùü]+");
-		Matcher matcher = pattern.matcher(string);
-		boolean resultat = matcher.matches();
-		
-		if(!resultat) {
-			throw new Exception("Caractère non valide !");
-		}
-		return resultat;
-		    	
     }
     
     public static boolean testerChoix(String string) throws Exception {			
@@ -240,18 +235,6 @@ public abstract class ControleurJeu implements ModeJeu {
 		
 		if(!resultat) {
 			throw new Exception("Saisie incorrecte, choisir 1 - 2 ou 3 !");
-		}
-		return resultat;    	
-    }
-    // TODO a finir
-    public boolean testerSaisieCombinaison(String string) throws Exception {			
-    	 
-		Pattern pattern = Pattern.compile("[0-9]{1}");
-		Matcher matcher = pattern.matcher(string);
-		boolean resultat = matcher.matches();
-		
-		if(!resultat) {
-			throw new Exception("Saisie incorrecte, saisir un chiffre !");
 		}
 		return resultat;    	
     }

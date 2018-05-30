@@ -1,6 +1,6 @@
 package com.jeu.model;
 
-
+import java.util.HashMap;
 
 /**
  * 
@@ -26,6 +26,11 @@ public abstract class Jeu {
      * 
      */
     protected char[] combinaisonReponseTab;
+    
+    /**
+     * 
+     */
+    protected HashMap<String, String> combinaisonReponseMap;
 
     /**
      * 
@@ -37,7 +42,7 @@ public abstract class Jeu {
     
     public static int nombreEssais = 10;
     
-    public abstract void initialiser();
+    public abstract void initialiser(String combinaison);
     public abstract String genererCombinaison(int longueur);
     
     public String getCombinaisonSecrete() {
@@ -49,6 +54,14 @@ public abstract class Jeu {
 
 	public char[] getCombinaisonSecreteTab() {
 		return combinaisonSecreteTab;
+	}
+	
+	
+	public void setCombinaisonReponseTab(char[] combinaisonReponseTab) {
+		this.combinaisonReponseTab = combinaisonReponseTab;
+	}
+	public HashMap getCombinaisonReponseMap() {
+		return combinaisonReponseMap;
 	}
 	public boolean[] getCombinaisonTest() {
 		return combinaisonTest;

@@ -69,7 +69,7 @@ public class VueConsole {
     public void afficherJeuCombinaisonIntro(int nombreEssais) {
     	String message = 	  "***********************************************************************\n"
 							+ "*               Découvrir la combinaison à l'aide de +/-              *\n"
-							+ "*                        Vous avez " + nombreEssais + " essai(s)                       *\n"
+							+ "*                        Vous avez " + nombreEssais + " essai(s)                        *\n"
 							+ "*                           Bonne chance!                             *\n"
 							+ "***********************************************************************";
     	System.out.println(message);
