@@ -48,6 +48,20 @@ public class VueConsole {
     	
     	System.out.println(message);
     }
+    
+    public void afficherPoursuivreSession() {
+    	String message = "Voulez-vous poursuivre la session ?\n"
+						+ "1 : Oui\n"
+						+ "2 : Non";
+    	System.out.println(message);
+    }
+    
+    public void afficherPoursuivrePartie() {
+    	String message = "Voulez-vous poursuivre la partie ?\n"
+						+ "1 : Oui\n"
+						+ "2 : Non";
+    	System.out.println(message);
+    }
 
     /**
      * 

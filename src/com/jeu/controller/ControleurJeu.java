@@ -48,14 +48,18 @@ public abstract class ControleurJeu implements ModeJeu {
     protected static Scanner sc;
     
     /**
-     * 
+     * Pour la session
      */
     private static boolean session;
     
     /**
      * 
      */
-    protected boolean partie;
+    private static boolean partie;
+    /**
+     * Pour un tour de jeu
+     */
+    protected boolean tourDeJeu;
     
     /**
      * Définit le choix mode développeur ou normal
@@ -98,21 +102,41 @@ public abstract class ControleurJeu implements ModeJeu {
     public static void demarrerSession() {
     	
     	int choix;
-     	session = true;    	
+     	session = true; 
+     	
+     	do {
+        	// Choisir un jeu
+         	vue.afficherMenuJeux();
+        	choix = choixJeu();    	
+        	controleurJeu = ControleurJeuFactory.getJeuControleur(choix);    	
+        	
+        	// Choisir un mode
+        	vue.afficherMenuMode();    	
+        	choix = choixMode();
+        	
+        	// Lancement du jeu
+        	partie = true;
+        	do {
+        		demarrerJeu(choix);
+        		// Permet de choisir de poursuivre la partie
+        		partie = poursuivrePartie();
+        	}
+        	while(partie);
+        	
+        	
+        	// Permet de choisir de poursuivre la session
+        	session = poursuivreSession();
+     	}
+     	while(session);
     	
-    	// Choisir un jeu
-     	vue.afficherMenuJeux();
-    	choix = choixJeu();    	
-    	controleurJeu = ControleurJeuFactory.getJeuControleur(choix);    	
-    	
-    	// Choisir un mode
-    	vue.afficherMenuMode();    	
-    	choix = choixMode();
-    	
-    	demarrerJeu(choix);
+
     	
     }
-    
+    /**
+     * Démarre je jeu en fonction du mode choisi (challenger, défenseur, duel)
+     * @param choixMode
+     * @return
+     */
     public static boolean demarrerJeu(int choixMode) {
     	
     	switch (choixMode) {
@@ -128,7 +152,7 @@ public abstract class ControleurJeu implements ModeJeu {
 	    	}
 	    	
 	    	case 3 : {
-	    		System.out.println("En cours de développement");
+	    		controleurJeu.duel();
 	    		break;
 	    	}
     	}
@@ -138,7 +162,7 @@ public abstract class ControleurJeu implements ModeJeu {
 
 
     /**
-     * 
+     * Permet de choisir entre le jeu combinaison +- et mastermind
      */
     public static int choixJeu() {
     	
@@ -162,7 +186,7 @@ public abstract class ControleurJeu implements ModeJeu {
     }
 
     /**
-     * 
+     * Permet de choisir le mode de jeu entre Challenger - Défenseur - Duel
      */
     public static int choixMode() {
 
@@ -183,10 +207,11 @@ public abstract class ControleurJeu implements ModeJeu {
     	while(!test);
     	
     	return Integer.parseInt(saisie);
-    }
-    
+    }   
 
-
+    /**
+     * Permet de choisir de jouer en mode développeur ou joueur
+     */
     public static void initialiserChoixSession() {
     	
     	String saisie;
@@ -214,6 +239,76 @@ public abstract class ControleurJeu implements ModeJeu {
    	
     }
     
+    /**
+     * Permet de choisir de poursuivre la session
+     */
+    public static boolean poursuivreSession() {
+    	
+    	vue.afficherPoursuivreSession();
+    	String saisie;
+    	boolean test;
+    	boolean retour = false;
+    	
+    	do {
+    		saisie = sc.next();
+    		
+    		try {
+				test = testerChoix(saisie);
+				
+        		if(saisie.equals("1")) {
+        			retour = true;        			
+        		}
+        		else {
+        			retour = false;
+        		}
+			} catch (Exception e) {
+				test = false;
+        		System.out.println(e.getMessage());
+        		vue.afficherPoursuivreSession();
+			}
+    	}
+    	while(!test);
+    	return retour;
+    }
+    
+    /**
+     * Permet de choisir de poursuivre la partie
+     */
+    public static boolean poursuivrePartie() {
+    	
+    	vue.afficherPoursuivrePartie();
+    	String saisie;
+    	boolean test;
+    	boolean retour = false;
+    	
+    	do {
+    		saisie = sc.next();
+    		
+    		try {
+				test = testerChoix(saisie);
+				
+        		if(saisie.equals("1")) {
+        			retour = true;        			
+        		}
+        		else {
+        			retour = false;
+        		}
+			} catch (Exception e) {
+				test = false;
+        		System.out.println(e.getMessage());
+        		vue.afficherPoursuivrePartie();
+			}
+    	}
+    	while(!test);
+    	return retour;
+    }
+    
+    /**
+     * Teste le choix du menu 1 ou 2
+     * @param string
+     * @return
+     * @throws Exception
+     */
     public static boolean testerChoix(String string) throws Exception {			
       	 
 		Pattern pattern = Pattern.compile("[12]{1}");
@@ -227,6 +322,12 @@ public abstract class ControleurJeu implements ModeJeu {
 
     }
     
+    /**
+     * Teste le choix du menu 1,2 ou 3
+     * @param string
+     * @return
+     * @throws Exception
+     */
     public static boolean testerChoixMode(String string) throws Exception {			
      	 
 		Pattern pattern = Pattern.compile("[1-3]{1}");

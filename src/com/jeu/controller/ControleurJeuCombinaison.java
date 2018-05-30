@@ -17,40 +17,40 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 	@Override
 	public void modeChallenger() {
 		
-		Joueur joueurH = new Joueur(TypeJoueur.humain, Jeu.nombreEssais);
-		Joueur joueurM = new Joueur(TypeJoueur.machine, Jeu.nombreEssais);
+		Joueur joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
+		Joueur joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
 		
 		joueurAttaque = new ControleurJoueur(joueurH, new AttaqueHumaine());
 		joueurDefend = new ControleurJoueur(joueurM, new DefenseMCombinaison());
 		jeuCombinaison.initialiser(joueurDefend.donnerCombinaison());
-		partie = true;
+		tourDeJeu = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
 		
     	do {
-    		partie = jouer();
+    		tourDeJeu = jouer();
     	}
-    	while(partie);
+    	while(tourDeJeu);
 		
 	}
 
 	@Override
 	public void modeDefenseur() {
 
-		Joueur joueurH = new Joueur(TypeJoueur.humain, Jeu.nombreEssais);
-		Joueur joueurM = new Joueur(TypeJoueur.machine, Jeu.nombreEssais);
+		Joueur joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
+		Joueur joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
 		
 		joueurAttaque = new ControleurJoueur(joueurM, new AttaqueMCombinaison());
 		joueurDefend = new ControleurJoueur(joueurH, new DefenseHumaine());
 		jeuCombinaison.initialiser(joueurDefend.donnerCombinaison());
-		partie = true;
+		tourDeJeu = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
 		
     	do {
-    		partie = jouer();
+    		tourDeJeu = jouer();
     	}
-    	while(partie);
+    	while(tourDeJeu);
 		
 	}
 
