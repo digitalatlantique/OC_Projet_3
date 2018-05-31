@@ -1,6 +1,9 @@
 package com.jeu.controller;
 
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,6 +81,7 @@ public abstract class ControleurJeu implements ModeJeu {
     
     public static void main(String[] args) {
 
+    	ControleurJeu.initialiserData();
     	ControleurJeu.initialiserSession();
     	ControleurJeu.demarrerSession();
     	
@@ -172,7 +176,7 @@ public abstract class ControleurJeu implements ModeJeu {
     	do {    		 
     		saisie = sc.next();
     		try {
-    			test = testerChoix(saisie);
+    			test = testerMenu(saisie);
     		}
     		catch (Exception e) {
         		test = false;
@@ -207,7 +211,52 @@ public abstract class ControleurJeu implements ModeJeu {
     	while(!test);
     	
     	return Integer.parseInt(saisie);
-    }   
+    }
+    
+    /**
+     * Permet d'initialiser la longueur de la combinaison et le nombre d'essais
+     */
+    public static void initialiserData() {
+    	
+		Properties property = new Properties();
+		InputStream input = null;
+		String file = "config.properties";
+		String longueur;
+		String essais;
+		
+		try {
+			input = new FileInputStream(file);
+			
+			property.load(input);
+			
+			longueur = property.getProperty("longueur");
+			essais = property.getProperty("essais");
+			
+			try {
+				Jeu.longueurCombinaison = propertiesTestLongueur(longueur);
+				Jeu.nombreEssais = propertiesTestEssais(essais);
+			}
+			catch(Exception e) {
+				System.out.println(e.getMessage());
+				
+			}
+
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(input != null) {
+				try {
+					input.close();
+				}
+				catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+    }
 
     /**
      * Permet de choisir de jouer en mode développeur ou joueur
@@ -220,7 +269,7 @@ public abstract class ControleurJeu implements ModeJeu {
     	do {      		
     		saisie = sc.next();
         	try {
-        		test = testerChoix(saisie);
+        		test = testerMenu(saisie);
         		
         		if(saisie.equals("1")) {
         			ChoixModeSession = false;        			
@@ -253,7 +302,7 @@ public abstract class ControleurJeu implements ModeJeu {
     		saisie = sc.next();
     		
     		try {
-				test = testerChoix(saisie);
+				test = testerMenu(saisie);
 				
         		if(saisie.equals("1")) {
         			retour = true;        			
@@ -285,7 +334,7 @@ public abstract class ControleurJeu implements ModeJeu {
     		saisie = sc.next();
     		
     		try {
-				test = testerChoix(saisie);
+				test = testerMenu(saisie);
 				
         		if(saisie.equals("1")) {
         			retour = true;        			
@@ -309,7 +358,7 @@ public abstract class ControleurJeu implements ModeJeu {
      * @return
      * @throws Exception
      */
-    public static boolean testerChoix(String string) throws Exception {			
+    public static boolean testerMenu(String string) throws Exception {			
       	 
 		Pattern pattern = Pattern.compile("[12]{1}");
 		Matcher matcher = pattern.matcher(string);
@@ -319,7 +368,6 @@ public abstract class ControleurJeu implements ModeJeu {
 			throw new Exception("Saisie incorrecte, choisir 1 ou 2 !");
 		}
 		return resultat;
-
     }
     
     /**
@@ -339,5 +387,59 @@ public abstract class ControleurJeu implements ModeJeu {
 		}
 		return resultat;    	
     }
+    
+    /**
+     * Cette méthode test la longueur saisie dans le fichier properties 
+     * De type int et compris entre 4 et 10
+     * @throws Exception 
+     */
+    public static int propertiesTestLongueur(String data) throws Exception{
+    	
+		Pattern pattern = Pattern.compile("[0-9]{1,2}");
+		Matcher matcher = pattern.matcher(data);
+		boolean resultat = matcher.matches();
+		
+		if(!resultat) {
+			throw new Exception("Merci d'écrire un nombre compris entre 4 et 10 !\n"
+								+ "Initialisation de la longueur de la combinaison à 4.");
+			
+		}
+		int longueur = Integer.parseInt(data);
+		
+		if(longueur < 4 || longueur > 10) {
+			throw new Exception("Merci d'écrire un nombre compris entre 4 et 10 !\n"
+					+ "Initialisation de la longueur de la combinaison à 4.");
+		}
+		
+		return longueur;
+		
+    }
+    /**
+     * Cette méthode test le nombre d'essais saisie dans le fichier properties 
+     * De type int et compris entre 4 et 25
+     * @throws Exception 
+     */
+    public static int propertiesTestEssais(String data) throws Exception{
+    	
+		Pattern pattern = Pattern.compile("[0-9]{1,2}");
+		Matcher matcher = pattern.matcher(data);
+		boolean resultat = matcher.matches();
+		
+		if(!resultat) {
+			throw new Exception("Merci d'écrire un nombre compris entre 4 et 25 !\n"
+								+ "Initialisation du nombre d'essais à 10.");
+			
+		}
+		int longueur = Integer.parseInt(data);
+		
+		if(longueur < 4 || longueur > 25) {
+			throw new Exception("Merci d'écrire un nombre compris entre 4 et 25 !\n"
+					+ "Initialisation du nombre d'essais à 10.");
+		}
+		
+		return longueur;
+		
+    }
+    
 
 }
