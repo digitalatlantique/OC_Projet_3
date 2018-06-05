@@ -137,9 +137,9 @@ public abstract class ControleurJeu implements ModeJeu {
     	
     }
     /**
-     * Démarre je jeu en fonction du mode choisi (challenger, défenseur, duel)
+     * Démarre je jeu en fonction du jeu et du mode choisi (challenger, défenseur, duel)
      * @param choixMode
-     * @return
+     * @return boolean
      */
     public static boolean demarrerJeu(int choixMode) {
     	

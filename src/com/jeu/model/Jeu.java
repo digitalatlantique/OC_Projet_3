@@ -43,7 +43,6 @@ public abstract class Jeu {
     public static int nombreEssais = 10;
     
     public abstract void initialiser(String combinaison);
-    public abstract String genererCombinaison(int longueur);
     
     public String getCombinaisonSecrete() {
 		return combinaisonSecrete;

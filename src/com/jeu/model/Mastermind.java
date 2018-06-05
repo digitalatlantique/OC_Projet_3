@@ -16,14 +16,11 @@ public class Mastermind extends Jeu {
 
 	@Override
 	public void initialiser(String combinaison) {
-		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public String genererCombinaison(int longueur) {
-		// TODO Auto-generated method stub
-		return null;
+		combinaisonSecrete = combinaison;
+		combinaisonSecreteTab = this.combinaisonSecrete.toCharArray();		
+		combinaisonReponseMap = new HashMap<String, String>(); 
+		
 	}
 
 }

@@ -14,12 +14,15 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 	private Jeu jeuCombinaison1;
 	private Jeu jeuCombinaison2;
 	private boolean modeDuel;
-	private Joueur joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
-	private Joueur joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
+	private Joueur joueurH;
+	private Joueur joueurM;
 
 	@Override
 	public void modeChallenger() {
 
+		joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
+		joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais); 
+		
 		modeDuel = false;
 		// Le joueur George est en mode attaque
 		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine());
@@ -42,7 +45,9 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 
 	@Override
 	public void modeDefenseur() {
-
+		
+		joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
+		joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
 
 		modeDuel = false;
 		// Le joueur T800 attaque
@@ -65,6 +70,9 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 
 	@Override
 	public void duel() {
+		
+		joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
+		joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
 		
 		modeDuel = true;
 		// Joueur1 (Goerge) affronte Joueur2 (T800)
