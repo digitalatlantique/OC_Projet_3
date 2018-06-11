@@ -53,7 +53,7 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 		// Le joueur T800 attaque
 		joueur1 = new ControleurJoueur(joueurM, new AttaqueMCombinaison());
 		// Le joueur George défend
-		joueur2 = new ControleurJoueur(joueurH, new DefenseHumaine());
+		joueur2 = new ControleurJoueur(joueurH, new DefenseHumaineCombinaison());
 		
 		jeuCombinaison1 = new Combinaison();
 		jeuCombinaison1.initialiser(joueur2.donnerCombinaison());
@@ -76,7 +76,7 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 		
 		modeDuel = true;
 		// Joueur1 (Goerge) affronte Joueur2 (T800)
-		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaine());
+		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaineCombinaison());
 		joueur2 = new ControleurJoueur(joueurM, new AttaqueMCombinaison(), new DefenseMCombinaison() );
 		// T800 Initialise une combinaison
 		jeuCombinaison1 = new Combinaison();

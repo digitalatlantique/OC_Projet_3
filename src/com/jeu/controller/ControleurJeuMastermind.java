@@ -3,6 +3,7 @@ package com.jeu.controller;
 import com.jeu.model.Combinaison;
 import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
+import com.jeu.model.Mastermind;
 import com.jeu.model.TypeJoueur;
 
 public class ControleurJeuMastermind extends ControleurJeu {
@@ -25,7 +26,7 @@ public class ControleurJeuMastermind extends ControleurJeu {
 		// Le joueur T800 est en mode défense
 		joueur2 = new ControleurJoueur(joueurM, new DefenseMMastermind());
 		
-		jeuMastermind1 = new Combinaison();
+		jeuMastermind1 = new Mastermind();
 		jeuMastermind1.initialiser(joueur2.donnerCombinaison());
 		
 		tourDeJeu = true;
@@ -41,7 +42,27 @@ public class ControleurJeuMastermind extends ControleurJeu {
 
 	@Override
 	public void modeDefenseur() {
-		// TODO Auto-generated method stub
+
+		joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
+		joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
+
+		modeDuel = false;
+		// Le joueur T800 attaque
+		joueur1 = new ControleurJoueur(joueurM, new AttaqueMMastermind());
+		// Le joueur George défend
+		joueur2 = new ControleurJoueur(joueurH, new DefenseHumaineMastermind());
+		
+		jeuMastermind1 = new Mastermind();
+		jeuMastermind1.initialiser(joueur2.donnerCombinaison());
+		
+		tourDeJeu = true;
+		
+		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
+		
+    	do {
+    		tourDeJeu = jouer();
+    	}
+    	while(tourDeJeu);	
 		
 	}
 
@@ -55,8 +76,6 @@ public class ControleurJeuMastermind extends ControleurJeu {
 	public boolean jouer() {
 
 		boolean test;
-		
-
 		
 		if(modeDuel) {
 			
