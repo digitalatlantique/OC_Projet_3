@@ -68,7 +68,28 @@ public class ControleurJeuMastermind extends ControleurJeu {
 
 	@Override
 	public void duel() {
-		// TODO Auto-generated method stub
+		joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
+		joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais);
+		
+		modeDuel = true;
+		// Joueur1 (Goerge) affronte Joueur2 (T800)
+		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaineMastermind());
+		joueur2 = new ControleurJoueur(joueurM, new AttaqueMMastermind(), new DefenseMMastermind() );
+		// T800 Initialise une combinaison
+		jeuMastermind1 = new Combinaison();
+		jeuMastermind1.initialiser(joueur2.donnerCombinaison());
+		// George Initialise une combinaison
+		jeuMastermind2 = new Combinaison();
+		jeuMastermind2.initialiser(joueur1.donnerCombinaison());
+		
+		tourDeJeu = true;
+		
+		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
+		
+    	do {
+    		tourDeJeu = jouer();
+    	}
+    	while(tourDeJeu);	
 		
 	}
 
@@ -77,6 +98,7 @@ public class ControleurJeuMastermind extends ControleurJeu {
 
 		boolean test;
 		
+		// Pour le mode duel
 		if(modeDuel) {
 			
 			// Affiche la solution en mode développeur
@@ -104,6 +126,7 @@ public class ControleurJeuMastermind extends ControleurJeu {
 
 			
 		}
+		// Pour les modes challenger ou défenseur
 		else {
 			
 			// Affiche la solution en mode développeur

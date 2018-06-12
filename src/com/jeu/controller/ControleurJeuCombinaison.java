@@ -99,10 +99,9 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 	@Override
 	public boolean jouer() {
 
-		boolean test;
-		
+		boolean test;		
 
-		
+		// Pour le mode duel
 		if(modeDuel) {
 			
 			// Affiche la solution en mode développeur
@@ -130,6 +129,7 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 
 			
 		}
+		// Pour les modes challenger ou défenseur
 		else {
 			
 			// Affiche la solution en mode développeur
