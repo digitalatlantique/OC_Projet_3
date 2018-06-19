@@ -8,6 +8,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.jeu.controller.ControleurJeuFactory;
 import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
@@ -79,12 +83,15 @@ public abstract class ControleurJeu implements ModeJeu {
      */
     protected String proposition;
     
+    private static Logger logger = LogManager.getLogger(ControleurJeu.class);
+    
     public static void main(String[] args) {
 
+    	logger.debug("Demarrage de l'application");
+    	logger.error("msg d'erreur");
     	ControleurJeu.initialiserData();
     	ControleurJeu.initialiserSession();
-    	ControleurJeu.demarrerSession();
-    	
+    	ControleurJeu.demarrerSession();    	
     }
     
     public abstract boolean jouer();
@@ -92,6 +99,8 @@ public abstract class ControleurJeu implements ModeJeu {
     
     public static void initialiserSession() {
     	
+	
+
     	vue = new VueConsole();
     	sc = new Scanner(System.in);
     	
