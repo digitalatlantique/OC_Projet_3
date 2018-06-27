@@ -1,4 +1,4 @@
-package com.jeu.controller;
+package com.jeu.controller.defendre;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

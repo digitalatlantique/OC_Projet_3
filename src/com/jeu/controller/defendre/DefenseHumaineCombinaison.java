@@ -1,23 +1,20 @@
-package com.jeu.controller;
+package com.jeu.controller.defendre;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.jeu.model.Jeu;
 
-public class DefenseHumaineMastermind extends Defense {
+public class DefenseHumaineCombinaison extends Defense {
 
 	@Override
 	public void analyser(Jeu jeu, String proposition) {
 		
 		boolean test;
-		int compteurPlace = 0;
-		int compteurPresent = 0;
-		String clePlace = "place";
-		String clePresent = "present";
+		String cle = new String("combinaisonReponse");
 
 		vue.afficherMessage("Votre adversaire propose : " + proposition);		
-		vue.afficherMessage("Indiqué le nombre de chiffre bien placé : ");
+		vue.afficherMessage("Indiqué à l'aide de + - ou = la bonne combinaison d'une longueur de " + Jeu.longueurCombinaison + " éléments");
 		
 		do {
 			saisie = sc.next();
@@ -27,44 +24,32 @@ public class DefenseHumaineMastermind extends Defense {
 			} catch (Exception e) {
         		test = false;
         		System.out.println(e.getMessage());
-        		vue.afficherMessage("Indiqué le nombre de chiffre bien placé : ");
+        		vue.afficherMessage("Indiqué à l'aide de + - ou = la bonne combinaison d'une longueur de " + Jeu.longueurCombinaison + " éléments");
 			}			
 		}
 		while(!test);
 		
-		compteurPlace = Integer.parseInt(saisie);
+		reponse = saisie;
+		reponseTab = reponse.toCharArray();
+		jeu.setCombinaisonReponseTab(reponseTab);
+		jeu.getCombinaisonReponseMap().put(cle, reponse);
 		
-		if(compteurPlace < Jeu.longueurCombinaison) {
-			vue.afficherMessage("Pour les chiffres restant indiqué le nombre de chiffre présent : ");
-			do {
-				saisie = sc.next();
-				
-				try {
-					test = testerReponseSaisie(saisie, Jeu.longueurCombinaison - compteurPlace);
-				} catch (Exception e) {
-	        		test = false;
-	        		System.out.println(e.getMessage());
-	        		vue.afficherMessage("Pour les chiffres restant indiqué le nombre de chiffre présent : ");
-				}			
+		for(int i=0; i<reponseTab.length; i++) {
+			if(reponseTab[i] == '=') {
+				jeu.getCombinaisonTest()[i] = true;
 			}
-			while(!test);
-			
-			compteurPresent = Integer.parseInt(saisie);
+			else {
+				jeu.getCombinaisonTest()[i] = false;
+			}
 		}
-
-
-		jeu.getCombinaisonReponseMap().put(clePlace, String.valueOf(compteurPlace));
-		jeu.getCombinaisonReponseMap().put(clePresent, String.valueOf(compteurPresent));
 		
-
-
 	}
 
 	@Override
 	public String genererCombinaison() {
 		
 		boolean test;
-		
+				
 		vue.afficherMessage("Faire deviner une combinaison composée de " + longueur + " chiffres");
 		
 		do {			
@@ -86,20 +71,15 @@ public class DefenseHumaineMastermind extends Defense {
 	}
 	
     public boolean testerReponseSaisie(String string, int longueur) throws Exception {			
-   	 
-		Pattern pattern = Pattern.compile("[0-9]{1,}");
+    	 
+		Pattern pattern = Pattern.compile("[+-=]{" + longueur + "}");
 		Matcher matcher = pattern.matcher(string);
 		boolean resultat = matcher.matches();
 		
 		if(!resultat) {
 			throw new Exception("Saisie incorrecte !");
 		}
-		
-		if(Integer.parseInt(string) > longueur) {			
-			throw new Exception("Merci de saisir un nombre inférieur ou égal à : " + longueur);			
-		}
 		return resultat;    	
     }
-
 
 }

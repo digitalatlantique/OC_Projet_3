@@ -1,4 +1,4 @@
-package com.jeu.controller;
+package com.jeu.controller.attaquer;
 
 import java.util.HashMap;
 

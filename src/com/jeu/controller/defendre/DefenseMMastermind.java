@@ -1,4 +1,4 @@
-package com.jeu.controller;
+package com.jeu.controller.defendre;
 
 import java.util.ArrayList;
 import java.util.Iterator;

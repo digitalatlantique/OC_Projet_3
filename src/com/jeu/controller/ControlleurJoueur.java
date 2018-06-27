@@ -2,6 +2,8 @@ package com.jeu.controller;
 
 import java.util.HashMap;
 
+import com.jeu.controller.attaquer.Attaquer;
+import com.jeu.controller.defendre.Defendre;
 import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
 

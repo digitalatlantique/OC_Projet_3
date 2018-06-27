@@ -1,5 +1,9 @@
 package com.jeu.controller;
 
+import com.jeu.controller.attaquer.AttaqueHumaine;
+import com.jeu.controller.attaquer.AttaqueMCombinaison;
+import com.jeu.controller.defendre.DefenseHumaineCombinaison;
+import com.jeu.controller.defendre.DefenseMCombinaison;
 import com.jeu.model.Combinaison;
 import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
