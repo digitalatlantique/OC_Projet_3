@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.jeu.controller.ControleurJeuFactory;
+import com.jeu.controller.ControlleurJeuFactory;
 import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
 import com.jeu.view.VueConsole;
@@ -20,29 +20,29 @@ import com.jeu.view.VueConsole;
 /**
  * 
  */
-public abstract class ControleurJeu implements ModeJeu {
+public abstract class ControlleurJeu implements ModeJeu {
 
     /**
      * Default constructor
      */
-    public ControleurJeu() {
+    public ControlleurJeu() {
 
     }
 
     /**
      * 
      */
-    protected ControleurJoueur joueur1;
+    protected ControlleurJoueur joueur1;
     
     /**
      * 
      */
-    protected ControleurJoueur joueur2;
+    protected ControlleurJoueur joueur2;
 
     /**
      * 
      */
-    private static ControleurJeu controleurJeu;
+    private static ControlleurJeu controleurJeu;
 
     /**
      * 
@@ -83,15 +83,14 @@ public abstract class ControleurJeu implements ModeJeu {
      */
     protected String proposition;
     
-    private static Logger logger = LogManager.getLogger(ControleurJeu.class);
+    private static Logger logger = LogManager.getLogger(ControlleurJeu.class);
     
     public static void main(String[] args) {
 
-    	logger.debug("Demarrage de l'application");
-    	logger.error("msg d'erreur");
-    	ControleurJeu.initialiserData();
-    	ControleurJeu.initialiserSession();
-    	ControleurJeu.demarrerSession();    	
+
+    	ControlleurJeu.initialiserData();
+    	ControlleurJeu.initialiserSession();
+    	ControlleurJeu.demarrerSession();    	
     }
     
     public abstract boolean jouer();
@@ -99,7 +98,8 @@ public abstract class ControleurJeu implements ModeJeu {
     
     public static void initialiserSession() {
     	
-	
+    	logger.debug("Demarrage de l'application");
+    	logger.error("msg d'erreur");
 
     	vue = new VueConsole();
     	sc = new Scanner(System.in);
@@ -121,7 +121,7 @@ public abstract class ControleurJeu implements ModeJeu {
         	// Choisir un jeu
          	vue.afficherMenuJeux();
         	choix = choixJeu();    	
-        	controleurJeu = ControleurJeuFactory.getJeuControleur(choix);    	
+        	controleurJeu = ControlleurJeuFactory.getJeuControleur(choix);    	
         	
         	// Choisir un mode
         	vue.afficherMenuMode();    	

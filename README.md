@@ -1,23 +1,24 @@
-*****	Projet N°3 du parcours développeur d'applications Java (OpenClassrooms).	*****
+#Projet N°3 du parcours développeur d'applications Java (OpenClassrooms).  
 
-Compétences à valider : Mise en oeuvre des concepts fondamentaux de la programmation en Java
+##Compétences à valider : Mise en oeuvre des concepts fondamentaux de la programmation en Java
 
+Pour compiler l'application : java ContolleurJeu.jar com.jeu
 Java Runtime Environment : JRE 9.0.1
 
 Disponible dans ce projet:
-- un diagramme de classe	=> diagrammes/ClassDiagram.png
-- Les sources
+*un diagramme de classe	=> diagrammes/ClassDiagram.png
+*Les sources
 
 
-Contexte :
+##Contexte :
 
 Créer une application proposant des jeux de logique.
 
-1 - La recherche d'une combinaison à l'aide d'indications +/-
-2 - Le célèbre Mastermind. 
+1. La recherche d'une combinaison à l'aide d'indications +/-
+2. Le célèbre Mastermind. 
 
 
------	Travail demandé		-----
+##Travail demandé
 
 Vous devez développer une application en Java, soit en mode console soit avec Swing, permettant de lancer les différents jeux.
 

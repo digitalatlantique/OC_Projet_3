@@ -5,21 +5,21 @@ import java.util.HashMap;
 import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
 
-public class ControleurJoueur {
+public class ControlleurJoueur {
 	
-	public ControleurJoueur(Joueur joueur, Attaquer attaque) {
+	public ControlleurJoueur(Joueur joueur, Attaquer attaque) {
 		
 		this.joueur = joueur;
 		this.attaque = attaque;
 	}
 	
-	public ControleurJoueur(Joueur joueur, Defendre defend) {
+	public ControlleurJoueur(Joueur joueur, Defendre defend) {
 		
 		this.joueur = joueur;
 		this.defend = defend;
 	}
 	
-	public ControleurJoueur(Joueur joueur, Attaquer attaque, Defendre defend) {
+	public ControlleurJoueur(Joueur joueur, Attaquer attaque, Defendre defend) {
 		
 		this.joueur = joueur;
 		this.attaque = attaque;

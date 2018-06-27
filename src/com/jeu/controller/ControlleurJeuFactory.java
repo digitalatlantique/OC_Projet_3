@@ -2,21 +2,21 @@ package com.jeu.controller;
 
 import com.jeu.model.Jeu;
 
-public class ControleurJeuFactory {
+public class ControlleurJeuFactory {
 	
 	public static final int COMBINAISON = 1;
 	public static final int MASTERMIND = 2;
 	
-    public static ControleurJeu getJeuControleur(int choix) {
+    public static ControlleurJeu getJeuControleur(int choix) {
     	
     	switch (choix) {
     	
     		case 1 : {
-    			return new ControleurJeuCombinaison();
+    			return new ControlleurJeuCombinaison();
     		}
     		
     		case 2 : {
-    			return new ControleurJeuMastermind();
+    			return new ControlleurJeuMastermind();
     		}
     		
     		default : return null;

@@ -5,9 +5,9 @@ import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
 import com.jeu.model.TypeJoueur;
 
-public class ControleurJeuCombinaison extends ControleurJeu {
+public class ControlleurJeuCombinaison extends ControlleurJeu {
 
-	public ControleurJeuCombinaison() {
+	public ControlleurJeuCombinaison() {
 
 	}
 	
@@ -25,9 +25,9 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 		
 		modeDuel = false;
 		// Le joueur George est en mode attaque
-		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine());
+		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaine());
 		// Le joueur T800 est en mode défense
-		joueur2 = new ControleurJoueur(joueurM, new DefenseMCombinaison());
+		joueur2 = new ControlleurJoueur(joueurM, new DefenseMCombinaison());
 		
 		jeuCombinaison1 = new Combinaison();
 		jeuCombinaison1.initialiser(joueur2.donnerCombinaison());
@@ -51,9 +51,9 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 
 		modeDuel = false;
 		// Le joueur T800 attaque
-		joueur1 = new ControleurJoueur(joueurM, new AttaqueMCombinaison());
+		joueur1 = new ControlleurJoueur(joueurM, new AttaqueMCombinaison());
 		// Le joueur George défend
-		joueur2 = new ControleurJoueur(joueurH, new DefenseHumaineCombinaison());
+		joueur2 = new ControlleurJoueur(joueurH, new DefenseHumaineCombinaison());
 		
 		jeuCombinaison1 = new Combinaison();
 		jeuCombinaison1.initialiser(joueur2.donnerCombinaison());
@@ -76,8 +76,8 @@ public class ControleurJeuCombinaison extends ControleurJeu {
 		
 		modeDuel = true;
 		// Joueur1 (Goerge) affronte Joueur2 (T800)
-		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaineCombinaison());
-		joueur2 = new ControleurJoueur(joueurM, new AttaqueMCombinaison(), new DefenseMCombinaison() );
+		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaineCombinaison());
+		joueur2 = new ControlleurJoueur(joueurM, new AttaqueMCombinaison(), new DefenseMCombinaison() );
 		// T800 Initialise une combinaison
 		jeuCombinaison1 = new Combinaison();
 		jeuCombinaison1.initialiser(joueur2.donnerCombinaison());

@@ -6,7 +6,7 @@ import com.jeu.model.Joueur;
 import com.jeu.model.Mastermind;
 import com.jeu.model.TypeJoueur;
 
-public class ControleurJeuMastermind extends ControleurJeu {
+public class ControlleurJeuMastermind extends ControlleurJeu {
 	
 	private Jeu jeuMastermind1;
 	private Jeu jeuMastermind2;
@@ -22,9 +22,9 @@ public class ControleurJeuMastermind extends ControleurJeu {
 
 		modeDuel = false;
 		// Le joueur George est en mode attaque
-		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine());
+		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaine());
 		// Le joueur T800 est en mode défense
-		joueur2 = new ControleurJoueur(joueurM, new DefenseMMastermind());
+		joueur2 = new ControlleurJoueur(joueurM, new DefenseMMastermind());
 		
 		jeuMastermind1 = new Mastermind();
 		jeuMastermind1.initialiser(joueur2.donnerCombinaison());
@@ -48,9 +48,9 @@ public class ControleurJeuMastermind extends ControleurJeu {
 
 		modeDuel = false;
 		// Le joueur T800 attaque
-		joueur1 = new ControleurJoueur(joueurM, new AttaqueMMastermind());
+		joueur1 = new ControlleurJoueur(joueurM, new AttaqueMMastermind());
 		// Le joueur George défend
-		joueur2 = new ControleurJoueur(joueurH, new DefenseHumaineMastermind());
+		joueur2 = new ControlleurJoueur(joueurH, new DefenseHumaineMastermind());
 		
 		jeuMastermind1 = new Mastermind();
 		jeuMastermind1.initialiser(joueur2.donnerCombinaison());
@@ -73,8 +73,8 @@ public class ControleurJeuMastermind extends ControleurJeu {
 		
 		modeDuel = true;
 		// Joueur1 (Goerge) affronte Joueur2 (T800)
-		joueur1 = new ControleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaineMastermind());
-		joueur2 = new ControleurJoueur(joueurM, new AttaqueMMastermind(), new DefenseMMastermind() );
+		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaineMastermind());
+		joueur2 = new ControlleurJoueur(joueurM, new AttaqueMMastermind(), new DefenseMMastermind() );
 		// T800 Initialise une combinaison
 		jeuMastermind1 = new Combinaison();
 		jeuMastermind1.initialiser(joueur2.donnerCombinaison());

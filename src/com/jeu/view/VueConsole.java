@@ -18,7 +18,7 @@ public class VueConsole {
     	
     	String message = 	"***********************************************************************\n"
     						+"*                            Bienvenue !                              *\n"
-    						+"*      Cette application vous propose des jeux de combibaison.        *\n"
+    						+"*      Cette application vous propose des jeux de combinaison.        *\n"
     						+"***********************************************************************";    	
     	System.out.println(message);
     }
