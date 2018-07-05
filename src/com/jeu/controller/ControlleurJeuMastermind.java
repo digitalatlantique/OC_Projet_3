@@ -144,8 +144,7 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 
 			test = verifierVictoire(joueur1.getJoueur(), jeuMastermind1);	
 
-			return test;
-			
+			return test;			
 		}
 	}
 

@@ -16,7 +16,7 @@ public class DefenseHumaineMastermind extends Defense {
 		String clePlace = "place";
 		String clePresent = "present";
 
-		vue.afficherMessage("Votre adversaire propose : " + proposition);		
+		vue.afficherMessage("T800 propose :                      " + proposition);		
 		vue.afficherMessage("Indiqué le nombre de chiffre bien placé : ");
 		
 		do {
