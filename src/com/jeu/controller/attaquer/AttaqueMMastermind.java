@@ -3,10 +3,15 @@ package com.jeu.controller.attaquer;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.jeu.controller.ControlleurJeu;
 import com.jeu.model.Jeu;
 
 public class AttaqueMMastermind extends Attaque {
 	
+	private Logger logger = LogManager.getLogger(AttaqueMMastermind.class);
 	private boolean premierCoup = true;
 	private boolean avance = true;
 	private int trouve = 0;
@@ -70,6 +75,8 @@ public class AttaqueMMastermind extends Attaque {
 				analyserResultat();				
 				miseAJourHistoriquePosition();									
 				nouvelleProposition();
+				
+				afficherHistoriquePosition();
 				
 				return proposition;				
 			}			
@@ -271,6 +278,8 @@ public class AttaqueMMastermind extends Attaque {
 		
 		int[] tab1 = new int[Jeu.longueurCombinaison];
 		int[] tab2 = new int[Jeu.longueurCombinaison];
+
+		
 		// Création de 2 tableaux pour comparaison
 		for (int j=0; j<historiquePropositions[ligne1].length; j++) {
 			tab1[j] = historiquePropositions[ligne1][j];
@@ -279,7 +288,7 @@ public class AttaqueMMastermind extends Attaque {
 		for(int j=0; j<tab1.length; j++) {
 			// Si un chiffre est différent
 			if(tab1[j] != tab2[j]) {
-				// Si ce chiffre fait parti de la combinaison alors il est mal placé
+				// Si le chiffre de la première ligne  fait parti de la combinaison alors il est mal placé
 				for(int i=0; i<lesBonsChiffres.length; i++) {
 					
 					if(lesBonsChiffres[i] == tab1[j]) {						
@@ -466,11 +475,11 @@ public class AttaqueMMastermind extends Attaque {
 				}
 				
 				if(avance) {
-					
+					logger.debug("Proposition différente dans le sens de lecture");
 					test = chercherChiffreSuivantDisponible(test);
 				}
 				else {
-					
+					logger.debug("Proposition différente dans le sens inverse de lecture");
 					test = chercherChiffrePrecedantDisponible(test);
 				}
 				
@@ -617,5 +626,39 @@ public class AttaqueMMastermind extends Attaque {
 		char temp = propositionTab[indiceChiffre1];
 		propositionTab[indiceChiffre1] = propositionTab[indiceChiffre2];
 		propositionTab[indiceChiffre2] = temp;
+	}
+	
+	private void afficherHistoriquePropositions() {
+		System.out.println("Affichage historique propositions");
+		for(int i = 0; i<historiquePropositions.length; i++) {
+			for(int j=0; j<historiquePropositions[0].length; j++) {
+				System.out.print(historiquePropositions[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println("------------------------------------");
+	}
+
+	private void afficherHistoriqueReponse() {
+		System.out.println("Affichage historique réponses");
+		for(int i=0; i<historiqueResultat.length; i++) {
+			for(int j=0; j<historiqueResultat[0].length; j++){
+				System.out.print(historiqueResultat[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println("------------------------------------");
+	}
+
+	private void afficherHistoriquePosition() {
+		System.out.println("Affichage historique position");
+		for (int i = 0; i < historiquePosition.length; i++) {
+			
+			for(int j=0; j<historiquePosition[i].length; j++) {
+				System.out.print(historiquePosition[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println("------------------------------------");
 	}
 }

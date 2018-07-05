@@ -99,7 +99,6 @@ public abstract class ControlleurJeu implements ModeJeu {
     public static void initialiserSession() {
     	
     	logger.debug("Demarrage de l'application");
-    	logger.error("msg d'erreur");
 
     	vue = new VueConsole();
     	sc = new Scanner(System.in);
@@ -142,7 +141,7 @@ public abstract class ControlleurJeu implements ModeJeu {
      	}
      	while(session);
     	
-
+     	logger.debug("Fin de l'application");
     	
     }
     /**
@@ -189,7 +188,7 @@ public abstract class ControlleurJeu implements ModeJeu {
     		}
     		catch (Exception e) {
         		test = false;
-        		System.out.println(e.getMessage());
+        		logger.debug(e.getMessage());
     	    	vue.afficherMenuJeux();
     		}
     	}
@@ -213,7 +212,7 @@ public abstract class ControlleurJeu implements ModeJeu {
     		}
     		catch (Exception e) {
         		test = false;
-        		System.out.println(e.getMessage());
+        		logger.debug(e.getMessage());
         		vue.afficherMenuMode();
     		}
     	}
@@ -246,13 +245,11 @@ public abstract class ControlleurJeu implements ModeJeu {
 				Jeu.nombreEssais = propertiesTestEssais(essais);
 			}
 			catch(Exception e) {
-				System.out.println(e.getMessage());
-				
+				logger.debug(e.getMessage());				
 			}
-
 		}
 		catch(IOException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		}
 		finally {
 			if(input != null) {
@@ -260,7 +257,7 @@ public abstract class ControlleurJeu implements ModeJeu {
 					input.close();
 				}
 				catch(IOException e) {
-					e.printStackTrace();
+					logger.debug(e.getMessage());
 				}
 			}
 		}
@@ -289,7 +286,7 @@ public abstract class ControlleurJeu implements ModeJeu {
         	}
         	catch (Exception e) {
         		test = false;
-        		System.out.println(e.getMessage());
+        		logger.debug(e.getMessage());
             	vue.afficherChoixSession();
         	}        	
     	}
@@ -321,7 +318,7 @@ public abstract class ControlleurJeu implements ModeJeu {
         		}
 			} catch (Exception e) {
 				test = false;
-        		System.out.println(e.getMessage());
+				logger.debug(e.getMessage());
         		vue.afficherPoursuivreSession();
 			}
     	}
@@ -353,7 +350,7 @@ public abstract class ControlleurJeu implements ModeJeu {
         		}
 			} catch (Exception e) {
 				test = false;
-        		System.out.println(e.getMessage());
+				logger.debug(e.getMessage());
         		vue.afficherPoursuivrePartie();
 			}
     	}
@@ -418,8 +415,7 @@ public abstract class ControlleurJeu implements ModeJeu {
 		if(longueur < 4 || longueur > 10) {
 			throw new Exception("Merci d'écrire un nombre compris entre 4 et 10 !\n"
 					+ "Initialisation de la longueur de la combinaison à 4.");
-		}
-		
+		}		
 		return longueur;
 		
     }
@@ -444,11 +440,7 @@ public abstract class ControlleurJeu implements ModeJeu {
 		if(longueur < 4 || longueur > 25) {
 			throw new Exception("Merci d'écrire un nombre compris entre 4 et 25 !\n"
 					+ "Initialisation du nombre d'essais à 10.");
-		}
-		
-		return longueur;
-		
+		}		
+		return longueur;		
     }
-    
-
 }

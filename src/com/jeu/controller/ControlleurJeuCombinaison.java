@@ -1,5 +1,8 @@
 package com.jeu.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.jeu.controller.attaquer.AttaqueHumaine;
 import com.jeu.controller.attaquer.AttaqueMCombinaison;
 import com.jeu.controller.defendre.DefenseHumaineCombinaison;
