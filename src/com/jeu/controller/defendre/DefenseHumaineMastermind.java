@@ -21,7 +21,7 @@ public class DefenseHumaineMastermind extends Defense {
 		String clePresent = "present";
 
 		vue.afficherMessage("T800 propose :                      " + proposition);		
-		vue.afficherMessage("Indiqué le nombre de chiffre bien placé : ");
+		vue.afficherMessage("Indiquer le nombre de chiffre bien placé : ");
 		
 		do {
 			saisie = sc.next();
@@ -31,7 +31,7 @@ public class DefenseHumaineMastermind extends Defense {
 			} catch (Exception e) {
         		test = false;
         		System.out.println(e.getMessage());
-        		vue.afficherMessage("Indiqué le nombre de chiffre bien placé : ");
+        		vue.afficherMessage("Indiquer le nombre de chiffre bien placé : ");
 			}			
 		}
 		while(!test);
@@ -39,7 +39,7 @@ public class DefenseHumaineMastermind extends Defense {
 		compteurPlace = Integer.parseInt(saisie);
 		
 		if(compteurPlace < Jeu.longueurCombinaison) {
-			vue.afficherMessage("Pour les chiffres restant indiqué le nombre de chiffre présent : ");
+			vue.afficherMessage("Pour les chiffres restants indiquer le nombre de chiffre présent : ");
 			do {
 				saisie = sc.next();
 				
@@ -48,7 +48,7 @@ public class DefenseHumaineMastermind extends Defense {
 				} catch (Exception e) {
 	        		test = false;
 	        		System.out.println(e.getMessage());
-	        		vue.afficherMessage("Pour les chiffres restant indiqué le nombre de chiffre présent : ");
+	        		vue.afficherMessage("Pour les chiffres restants indiquer le nombre de chiffre présent : ");
 				}			
 			}
 			while(!test);

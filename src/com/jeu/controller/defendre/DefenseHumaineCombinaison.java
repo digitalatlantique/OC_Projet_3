@@ -18,7 +18,7 @@ public class DefenseHumaineCombinaison extends Defense {
 		String cle = new String("combinaisonReponse");
 
 		vue.afficherMessage("T800 propose : " + proposition);		
-		vue.afficherMessage("Indiqué à l'aide de + - ou = la bonne combinaison d'une longueur de " + Jeu.longueurCombinaison + " éléments");
+		vue.afficherMessage("Indiquer à l'aide de + - ou = la bonne combinaison d'une longueur de " + Jeu.longueurCombinaison + " éléments");
 		
 		do {
 			saisie = sc.next();
@@ -28,7 +28,7 @@ public class DefenseHumaineCombinaison extends Defense {
 			} catch (Exception e) {
         		test = false;
         		System.out.println(e.getMessage());
-        		vue.afficherMessage("Indiqué à l'aide de + - ou = la bonne combinaison d'une longueur de " + Jeu.longueurCombinaison + " éléments");
+        		vue.afficherMessage("Indiquer à l'aide de + - ou = la bonne combinaison d'une longueur de " + Jeu.longueurCombinaison + " éléments");
 			}			
 		}
 		while(!test);

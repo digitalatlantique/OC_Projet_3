@@ -15,7 +15,7 @@ public class AttaqueHumaine extends Attaque  {
 		
 		boolean test;
 		
-    	vue.afficherMessage("Trouvé la combinaison à : " + Jeu.longueurCombinaison + " chiffres.");
+    	vue.afficherMessage("Trouver la combinaison à : " + Jeu.longueurCombinaison + " chiffres.");
     	
     	do {
     		
@@ -26,7 +26,7 @@ public class AttaqueHumaine extends Attaque  {
     		catch(Exception e) {
     			test = false;
     			System.out.println(e.getMessage());
-    			vue.afficherMessage("Trouvé la combinaison à : " + Jeu.longueurCombinaison + " chiffres.");
+    			vue.afficherMessage("Trouver la combinaison à : " + Jeu.longueurCombinaison + " chiffres.");
     		}    		
     	}
     	while(!test);
