@@ -3,7 +3,7 @@ package com.jeu.model;
 import java.util.HashMap;
 
 /**
- * 
+ * Cette classe représente une combinaison pour le jeu combinaison+-
  */
 public class Combinaison extends Jeu {
 	

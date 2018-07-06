@@ -1,7 +1,11 @@
 package com.jeu.controller.defendre;
 
 import com.jeu.model.Jeu;
-
+/**
+ * Cette classe permet à l'ordinateur (machine) de donner des indications pour le jeu combinaison +-
+ * @author Workstation
+ *
+ */
 public class DefenseMCombinaison extends Defense {
 
 	@Override

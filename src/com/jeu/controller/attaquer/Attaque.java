@@ -5,7 +5,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.jeu.view.VueConsole;
-
+/**
+ * Cette classe abstraite permet de regrouper les propriétés du comportement d'attaque
+ * @author Workstation
+ *
+ */
 public abstract class Attaque implements Attaquer {
 	
 	protected VueConsole vue = new VueConsole();

@@ -8,22 +8,75 @@ import org.apache.logging.log4j.Logger;
 
 import com.jeu.controller.ControlleurJeu;
 import com.jeu.model.Jeu;
-
+/**
+ * Cette classe permet à l'ordinateur (machine) de faire une proposition avec le jeu mastermind
+ * En fonction des indications du défenseur : placé, présent(ou mauvaise position)
+ * @author Workstation
+ *
+ */
 public class AttaqueMMastermind extends Attaque {
 	
+	/**
+	 * Permet la gestion des logs
+	 */
 	private Logger logger = LogManager.getLogger(AttaqueMMastermind.class);
+	/**
+	 * Permer l'initialisation du premier coup)
+	 */
 	private boolean premierCoup = true;
+	/**
+	 * Lorsqu'une proposition existe permet de faire une recherche de chiffre disponible dans le sens de lecture
+	 */
 	private boolean avance = true;
+	/**
+	 * Indique le nombre de chiffre trouvé
+	 */
 	private int trouve = 0;
+	/**
+	 * Indique le numéro de tour de jeu (débute à zéro)
+	 */
 	private int numeroCoup = 0;
+	/**
+	 * Initialise l'indice de recherche du chiffre 1
+	 */
 	private int indice1 = 0;
+	/**
+	 * Initialise l'indice de recherche du chiffre 2
+	 */
 	private int indice2 = 0;
+	/**
+	 * Permet de connaitre si un indice est disponible pour la proposition d'une nouvelle combinaison
+	 */
 	private boolean[] indiceDisponible;
+	/**
+	 * Tableau contenant les chiffres de la combinaison dans l'ordre d'apparition
+	 * Les indices de ce tableau est en correspondance avec les lignes de la matrice historique position
+	 */
 	private int[] lesBonsChiffres;
+	/**
+	 * Correspond à l'historique des propositions
+	 * Les lignes correspondent au numéro du tour de jeu
+	 * Les colonnes correspondent aux chiffres de la combinaison
+	 */
 	private int[][] historiquePropositions;
+	/**
+	 * Conserve l'historique des indications du défenseur
+	 * Les lignes correspondent au numéro du tour de jeu
+	 * La colonne 0 = au nombre de chiffre présent
+	 * La colonne 1 = au nombre de chiffre placé
+	 */
 	private int[][] historiqueResultat;
+	/**
+	 * Permet de connaitre si un chiffre est à la bonne place
+	 * 0 : Le chiffre n'a pas sa place ici
+	 * 1 : Le chiffre est bien placé
+	 * 2 : On ne sait pas
+	 */
 	private int[][] historiquePosition;
 	
+	/**
+	 * Initialise les tableaux
+	 */
 	public AttaqueMMastermind() {
 		
 		historiquePropositions = new int[Jeu.nombreEssais][Jeu.longueurCombinaison];
@@ -40,7 +93,9 @@ public class AttaqueMMastermind extends Attaque {
 		}
 		lesBonsChiffres = new int[Jeu.longueurCombinaison];
 	}
-	
+	/**
+	 * L'ordinateur fait une proposition en fonction des indications du défenseur
+	 */
 	@Override
 	public String proposer(HashMap<String, String> reponse) {
 		// Pour le premier tour de jeu
@@ -69,7 +124,7 @@ public class AttaqueMMastermind extends Attaque {
 				
 				proposerChiffre();
 			}
-			// Si tout les chiffres sont connus, on analyse les coups précédants puis on fait une nouvelle proposition
+			// Si tous les chiffres sont connus, on analyse les coups précédants puis on fait une nouvelle proposition
 			else {
 				
 				analyserResultat();				
@@ -103,7 +158,7 @@ public class AttaqueMMastermind extends Attaque {
 	}
 	
 	/**
-	 * Propose une suite de chiffre conservant les bon chiffres de la combinaison et ajoutant 1 pour les chiffre à deviner
+	 * Propose une suite de chiffre conservant les bons chiffres de la combinaison et ajoutant 1 pour les chiffres à deviner
 	 */
 	private void proposerChiffre() {
 		int temporaire;
@@ -119,14 +174,15 @@ public class AttaqueMMastermind extends Attaque {
 		numeroCoup++;
 		proposition = new String(propositionTab);
 	}
-
+	/**
+	 * Permet d'ajouter la proposition à l'historique des propositions
+	 */
 	private void ajouterProposition() {		
 		int longueurPropositionTab = propositionTab.length;
 		for(int j = 0; j < longueurPropositionTab; j++ ) {
 			historiquePropositions[numeroCoup][j] = Character.digit(propositionTab[j], 10);
 		}		
-	}
-	
+	}	
 	/**
 	 * Analyse les chiffres mal placés et correctement bien placé
 	 */
@@ -136,7 +192,9 @@ public class AttaqueMMastermind extends Attaque {
 		chercherChiffreBienPlace();
 		
 	}
-	
+	/**
+	 * Recherche les chiffres appartenant à la combinaison et mal placé
+	 */
 	private void chercherChiffreMalPlace() {
 		int nombreDeChiffrePresent = nombreChiffrePresentMax();
 		int nombreDeChiffrePlace = 0;
@@ -167,17 +225,20 @@ public class AttaqueMMastermind extends Attaque {
 		
 		/*
 		 * Recherche d'un bon chiffre présent et mal placé
-		 * En comparant (présent à présent - 1) et (placé = 1)
+		 * En comparant du dernier coup au premier (présent à présent - 1) et (placé = 1)
+		 * Condition : le chiffre de la deuxième ligne ne doit pas appartenir à la combinaison, sinon risque de confusion avec un chiffre bien placé
 		 */
 		nombreDeChiffrePresent = nombreChiffrePresentMax();
 		nombreDeChiffrePlace = nombreChiffrePlaceMax();
 		int ligne1 = -1;
 		int ligne2 = -1;
-		
+		// On boucle à partir du nombre max de chiffre présent
 		while(nombreDeChiffrePresent > 0) {
-			
+			// On boucle à partir du nombre max de chiffre placé
 			while(nombreDeChiffrePlace > 0) {
+				
 				int longueurHistoriqueResultat =  historiqueResultat.length-1;
+				// Si un nouveau chiffre est présent alors il est mal placé
 				for(int i = longueurHistoriqueResultat ; i>=0; i--) {
 
 					if(historiqueResultat[i][0] == nombreDeChiffrePresent && historiqueResultat[i][1] == nombreDeChiffrePlace) {
@@ -210,11 +271,13 @@ public class AttaqueMMastermind extends Attaque {
 		 */
 		nombreDeChiffrePresent = nombreChiffrePresentMax();
 		nombreDeChiffrePlace = nombreChiffrePlaceMax();
-				
+		// On boucle à partir du nombre max de chiffre présent		
 		while(nombreDeChiffrePresent > 0) {
-			
+			// On boucle à partir du nombre max de chiffre placé
 			while(nombreDeChiffrePlace > 0) {
+				
 				int longueurHistoriqueResultat =  historiqueResultat.length-1;
+				// Si deux chiffres intervertis ajoute un présent et soustrait un placé, alors ils sont mal placés
 				for(int i = longueurHistoriqueResultat ; i>=0; i--) {
 
 					if(historiqueResultat[i][0] == nombreDeChiffrePresent && historiqueResultat[i][1] == nombreDeChiffrePlace - 1) {
@@ -313,7 +376,7 @@ public class AttaqueMMastermind extends Attaque {
 		}		
 	}
 	
-	// TODO variable initialisation boucle
+	
 	private void comparerChiffrePresentMalPlace(int ligne1, int ligne2) {
 		
 		int[] tab1 = new int[Jeu.longueurCombinaison];
@@ -339,13 +402,15 @@ public class AttaqueMMastermind extends Attaque {
 			}			
 		}
 	}
-	
+	/**
+	 * Recherche les chiffres bien placé
+	 */
 	private void chercherChiffreBienPlace() {
 		// Cherche les chiffres bien placés
 		unBienPlaceZeroPresent();		
 		bienPlaceParComparaison();
 	}
-	
+
 	private void unBienPlaceZeroPresent() {
 		
 		int nombreDeChiffrePresent = 0;
@@ -357,7 +422,7 @@ public class AttaqueMMastermind extends Attaque {
 				
 				for(int i2=0; i2<historiquePosition.length; i2++) {
 					for(int j2=0; j2<historiquePosition[i2].length; j2++) {
-						
+						// Si le chiffre est unique alors il est bien placé
 						if(historiquePropositions[i][j2] == lesBonsChiffres[i2] && chiffreUniqueLigne(i, lesBonsChiffres[i2])) {
 							historiquePosition[i2][j2] = 1;
 						}
@@ -365,7 +430,13 @@ public class AttaqueMMastermind extends Attaque {
 				}				
 			}					
 		}
-	}	
+	}
+	/**
+	 * Permet de connaitre l'unicité d'un chiffre
+	 * @param ligne
+	 * @param chiffre
+	 * @return
+	 */
 	private boolean chiffreUniqueLigne(int ligne, int chiffre) {
 
 		int compteur = 0;
@@ -382,7 +453,10 @@ public class AttaqueMMastermind extends Attaque {
 		else {
 			return false;
 		}
-	}	
+	}
+	/**
+	 * Recherche des chiffres bien placés par comparaison
+	 */
 	private void bienPlaceParComparaison() {
 		// comparer 2 lignes
 		int nombreDeChiffrePresent = nombreChiffrePresentMax();
@@ -393,6 +467,7 @@ public class AttaqueMMastermind extends Attaque {
 		while(nombreDeChiffrePresent > 0) {
 			
 			while(nombreDeChiffrePlace > 0) {
+				// Si un chiffre de la combinaison était bien placé
 				for(int i = historiqueResultat.length-1 ; i>=0; i--) {	
 					
 					if(historiqueResultat[i][0] == nombreDeChiffrePresent && historiqueResultat[i][1] == nombreDeChiffrePlace ) {
@@ -443,7 +518,9 @@ public class AttaqueMMastermind extends Attaque {
 			}			
 		}		
 	}
-	
+	/**
+	 * Permet de mettre à jour les lignes et colonnes correspondant aux chiffres bien placés
+	 */
 	private void miseAJourHistoriquePosition() {
 		
 		for(int i=0; i<historiquePosition.length; i++) {
@@ -509,15 +586,16 @@ public class AttaqueMMastermind extends Attaque {
 			boolean test = true;
 
 			do {
-				
+				// Si les indices sont à la fin de la proposition on repart en arrière
 				if(indice1 == propositionTab.length - 2 && indice2 == propositionTab.length -1) {
 					avance = false;
 				}
-				
+				// Recherche d'une proposition disponible dans le sens de lecture
 				if(avance) {
 					logger.debug("Proposition différente dans le sens de lecture");
 					test = chercherChiffreSuivantDisponible(test);
 				}
+				// Recherche d'une proposition disponible dans le sens inverse
 				else {
 					logger.debug("Proposition différente dans le sens inverse de lecture");
 					test = chercherChiffrePrecedantDisponible(test);
@@ -530,13 +608,15 @@ public class AttaqueMMastermind extends Attaque {
 		ajouterProposition();
 		numeroCoup++;		
 	}
-
+	/**
+	 * Génère une propostion en fonction du tableau des positions disponibles
+	 */
 	private void propositionHistorique() {
 		boolean chiffrePositionne = false;		
 		
 		for(int i=0; i< historiquePosition.length - 1; i++) {
 			for(int j=0; j<historiquePosition[i].length; j++) {
-				
+				// Si La place est disponible et que le chiffre suivant ne se positionne pas dessu alors on affecte le chiffre
 				if(historiquePosition[i][j] == 2 && historiquePosition[i + 1][j] == 0 && indiceDisponible[j]) {
 					propositionTab[j] = Character.forDigit(lesBonsChiffres[i], 10);
 					indiceDisponible[j] = false;
@@ -544,6 +624,7 @@ public class AttaqueMMastermind extends Attaque {
 					break;
 				}
 			}
+			// Si le chiffre n'est pas positionné on prend la première position ok et indice disponible
 			if(chiffrePositionne == false) {
 				for(int j=0; j<historiquePosition[i].length; j++) {
 					
@@ -556,6 +637,7 @@ public class AttaqueMMastermind extends Attaque {
 			}
 			chiffrePositionne = false;
 		}
+		// On affecte le dernier chiffre au dernier indice disponible
 		for(int i=0; i<indiceDisponible.length; i++) {
 			if(indiceDisponible[i]) {
 				propositionTab[i] = Character.forDigit(lesBonsChiffres[lesBonsChiffres.length - 1], 10);
@@ -563,6 +645,10 @@ public class AttaqueMMastermind extends Attaque {
 			}
 		}
 	}
+	/**
+	 * Vérifie si la proposition existe
+	 * @return
+	 */
 	private boolean propositionExiste() {		
 		
 		// Comparaison nouvelle proposition avec les anciennes propositions
@@ -589,7 +675,7 @@ public class AttaqueMMastermind extends Attaque {
 		}		
 		return propositionEgale;
 	}
-
+	// Dans le sens de lecture 
 	private boolean chercherChiffreSuivantDisponible(boolean test) {
 		
 		while(indice1 < propositionTab.length -2 && test) {
@@ -620,7 +706,7 @@ public class AttaqueMMastermind extends Attaque {
 		}
 		return test;
 	}
-
+	// Dans le sens inverse de lecture
 	private boolean chercherChiffrePrecedantDisponible(boolean test) {
 		indice1 = Jeu.longueurCombinaison - 1;
 		indice2 = Jeu.longueurCombinaison - 2;
@@ -652,7 +738,13 @@ public class AttaqueMMastermind extends Attaque {
 			indice1--;
 		}
 		return test;
-	}	
+	}
+	/**
+	 * Vérifie si la position d'un chiffre est disponible
+	 * @param chiffre
+	 * @param position
+	 * @return
+	 */
 	private boolean verifierEtatChiffre(int chiffre, int position) {
 
 		for(int i=0; i<lesBonsChiffres.length; i++) {
@@ -662,6 +754,11 @@ public class AttaqueMMastermind extends Attaque {
 		}
 		return false;		
 	}
+	/**
+	 * Inverse deux chiffres
+	 * @param indiceChiffre1
+	 * @param indiceChiffre2
+	 */
 	private void inverserChiffre(int indiceChiffre1, int indiceChiffre2) {
 		char temp = propositionTab[indiceChiffre1];
 		propositionTab[indiceChiffre1] = propositionTab[indiceChiffre2];

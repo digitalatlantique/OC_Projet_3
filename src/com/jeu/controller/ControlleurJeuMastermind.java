@@ -12,12 +12,29 @@ import com.jeu.model.TypeJoueur;
 
 public class ControlleurJeuMastermind extends ControlleurJeu {
 	
+	/**
+	 * Correspond à la première combinaison
+	 */
 	private Jeu jeuMastermind1;
+	/**
+	 * Correspond à la deuxième combinaison
+	 */	
 	private Jeu jeuMastermind2;
+	/**
+	 * Permet de vérifier si le mode duel est actif
+	 */
 	private boolean modeDuel;
+	/**
+	 * Représente le joueur humain
+	 */
 	private Joueur joueurH;
+	/**
+	 * Représente l'ordinateur (machine)
+	 */
 	private Joueur joueurM;
-
+	/**
+	 * Configure le jeu en mode challenger (humain attaque, ordinateur défend)
+	 */
 	@Override
 	public void modeChallenger() {
 		
@@ -36,14 +53,16 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 		tourDeJeu = true;
 		
 		vue.afficherJeuMastermindIntro(Jeu.nombreEssais); 
-		
+		// Correspond à un tour de jeu
     	do {
     		tourDeJeu = jouer();
     	}
     	while(tourDeJeu);
 		
 	}
-
+	/**
+	 * Configure le jeu en mode défenseur (ordinateur attaque, humain défend)
+	 */
 	@Override
 	public void modeDefenseur() {
 
@@ -62,14 +81,16 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 		tourDeJeu = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
-		
+		// Correspond à un tour de jeu
     	do {
     		tourDeJeu = jouer();
     	}
     	while(tourDeJeu);	
 		
 	}
-
+	/**
+	 * Configure le jeu en mode duel (Humain VS ordinateur)
+	 */
 	@Override
 	public void duel() {
 		joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
@@ -89,14 +110,18 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 		tourDeJeu = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
-		
+		// Correspond à un tour de jeu
     	do {
     		tourDeJeu = jouer();
     	}
     	while(tourDeJeu);	
 		
 	}
-
+	/**
+	 * Configuration d'un tour de jeu
+	 * En mode duel : Le joueur 1 attaque et le joueur 2 défend et inversement
+	 * Dans les autres mode : Le joueur 1 attaque et le joueur 2 défend
+	 */
 	@Override
 	public boolean jouer() {
 
@@ -147,29 +172,31 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 			return test;			
 		}
 	}
-
-
+	/**
+	 * Permet de vérifier si la partie est gagnée, perdue, continue
+	 */
 	@Override
 	public boolean verifierVictoire(Joueur joueur, Jeu jeu) {
 		
 		boolean resultat = false;
 		int place = Integer.parseInt((String) jeu.getCombinaisonReponseMap().get("place"));
-		
+		// Vérifie si tous les chiffres sont placés
 		if(place == Jeu.longueurCombinaison) {
 			resultat = true;
 		}
-		
+		// Si oui c'est gagné
     	if(resultat) {
     		vue.afficherMessage(joueur.getType() + " a gagné !!");
     		vue.afficherMessage("La combinaison est : " + jeu.getCombinaisonSecrete());
     		return false;
     	}
+    	// Si le joueur a jouer son dernier coup, alors c'est perdu
     	else if (joueur.getNombreEssais() == 1) {
     		vue.afficherMessage(joueur.getType() + " a Perdu");
     		vue.afficherMessage("La combinaison est : " + jeu.getCombinaisonSecrete());
     		return false;
     	}
-    	
+    	// Sinon la partie continue
     	else {
     		joueur.setNombreEssais(joueur.getNombreEssais() - 1);
     		vue.afficherMessage("***********************************************************************");

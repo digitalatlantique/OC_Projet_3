@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.jeu.model.Jeu;
-
+/**
+ * Cette classe permet à l'ordinateur (machine) de donner des indications pour le jeu mastermind
+ * @author Workstation
+ *
+ */
 public class DefenseMMastermind extends Defense {
 
 	@Override

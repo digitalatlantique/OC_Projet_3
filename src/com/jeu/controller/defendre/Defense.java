@@ -6,7 +6,11 @@ import java.util.regex.Pattern;
 
 import com.jeu.model.Jeu;
 import com.jeu.view.VueConsole;
-
+/**
+ * Cette classe abstraite permet de regrouper les propriétés du comportement défendre
+ * @author Workstation
+ *
+ */
 public abstract class Defense implements Defendre{
 	
 	protected Scanner sc = new Scanner(System.in);

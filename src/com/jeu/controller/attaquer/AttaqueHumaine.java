@@ -3,7 +3,11 @@ package com.jeu.controller.attaquer;
 import java.util.HashMap;
 
 import com.jeu.model.Jeu;
-
+/**
+ * Cette classe permet au joueur humain de proposer une combinaison
+ * @author Workstation
+ *
+ */
 public class AttaqueHumaine extends Attaque  {
 
 	@Override

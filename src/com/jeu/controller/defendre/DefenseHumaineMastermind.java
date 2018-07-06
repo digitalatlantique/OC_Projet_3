@@ -4,7 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.jeu.model.Jeu;
-
+/**
+ * Cette classe permet de donner des indications à l'attaquant pour le jeu mastermind
+ * @author Workstation
+ *
+ */
 public class DefenseHumaineMastermind extends Defense {
 
 	@Override

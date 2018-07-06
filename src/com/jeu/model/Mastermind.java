@@ -4,7 +4,7 @@ package com.jeu.model;
 import java.util.*;
 
 /**
- * 
+ * Cette classe représente une combinaison pour le jeu mastermind
  */
 public class Mastermind extends Jeu {
 

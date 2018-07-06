@@ -30,41 +30,41 @@ public abstract class ControlleurJeu implements ModeJeu {
     }
 
     /**
-     * 
+     * Permet de paramètrer de le joueur 1 (Attaque - Défense - Les deux)
      */
     protected ControlleurJoueur joueur1;
     
     /**
-     * 
+     * Permet de paramètrer de le joueur 2 (Attaque - Défense - Les deux)
      */
     protected ControlleurJoueur joueur2;
 
     /**
-     * 
+     * Correspond au contrôleur de jeu principale
      */
     private static ControlleurJeu controleurJeu;
 
     /**
-     * 
+     * Permet l'affichage des éléments en console
      */
     protected static VueConsole vue;
     
     /**
-     * 
+     * Pour récupérer les saisies des utilisateurs
      */
     protected static Scanner sc;
     
     /**
-     * Pour la session
+     * Représente la session la session
      */
     private static boolean session;
     
     /**
-     * 
+     * Représente une partie
      */
     private static boolean partie;
     /**
-     * Pour un tour de jeu
+     * Pour un tour de jeu (coup, essai)
      */
     protected boolean tourDeJeu;
     
@@ -79,10 +79,12 @@ public abstract class ControlleurJeu implements ModeJeu {
     protected int modeJeu;
     
     /**
-     * 
+     * Correspond à une proposition
      */
     protected String proposition;
-    
+    /**
+     * Permet la gestion des logs
+     */
     private static Logger logger = LogManager.getLogger(ControlleurJeu.class);
     
     public static void main(String[] args) {
@@ -95,7 +97,9 @@ public abstract class ControlleurJeu implements ModeJeu {
     
     public abstract boolean jouer();
     public abstract boolean verifierVictoire(Joueur joueur, Jeu jeu);
-    
+    /**
+     * Initialise la session et paramètre le choix mode développeur ou non
+     */
     public static void initialiserSession() {
     	
     	logger.debug("Demarrage de l'application");
@@ -110,7 +114,9 @@ public abstract class ControlleurJeu implements ModeJeu {
     	// Récupération du choix de session (Joueur / développeur)
     	initialiserChoixSession();  	
     }
-    
+    /**
+     * Permet d'initialiser et de démarrer une session
+     */
     public static void demarrerSession() {
     	
     	int choix;
@@ -122,7 +128,7 @@ public abstract class ControlleurJeu implements ModeJeu {
         	choix = choixJeu();    	
         	controleurJeu = ControlleurJeuFactory.getJeuControleur(choix);    	
         	
-        	// Choisir un mode
+        	// Choisir un mode de jeu
         	vue.afficherMenuMode();    	
         	choix = choixMode();
         	
@@ -133,8 +139,7 @@ public abstract class ControlleurJeu implements ModeJeu {
         		// Permet de choisir de poursuivre la partie
         		partie = poursuivrePartie();
         	}
-        	while(partie);
-        	
+        	while(partie);        	
         	
         	// Permet de choisir de poursuivre la session
         	session = poursuivreSession();

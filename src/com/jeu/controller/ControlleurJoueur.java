@@ -6,7 +6,11 @@ import com.jeu.controller.attaquer.Attaquer;
 import com.jeu.controller.defendre.Defendre;
 import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
-
+/**
+ * Cette classe permet de configurer le comportement d'un joueur (attaque - défense ou les deux)
+ * @author Workstation
+ *
+ */
 public class ControlleurJoueur {
 	
 	public ControlleurJoueur(Joueur joueur, Attaquer attaque) {

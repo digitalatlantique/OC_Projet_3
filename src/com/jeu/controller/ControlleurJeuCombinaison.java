@@ -1,8 +1,5 @@
 package com.jeu.controller;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.jeu.controller.attaquer.AttaqueHumaine;
 import com.jeu.controller.attaquer.AttaqueMCombinaison;
 import com.jeu.controller.defendre.DefenseHumaineCombinaison;
@@ -17,16 +14,32 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 	public ControlleurJeuCombinaison() {
 
 	}
-	
+	/**
+	 * Correspond à la première combinaison
+	 */
 	private Jeu jeuCombinaison1;
+	/**
+	 * Correspond à la deuxième combinaison
+	 */
 	private Jeu jeuCombinaison2;
+	/**
+	 * Permet de vérifier si le mode duel est actif
+	 */
 	private boolean modeDuel;
+	/**
+	 * Représente le joueur humain
+	 */
 	private Joueur joueurH;
+	/**
+	 * Représente l'ordinateur (machine)
+	 */
 	private Joueur joueurM;
-
+	/**
+	 * Configure le jeu en mode challenger (humain attaque, ordinateur défend)
+	 */
 	@Override
 	public void modeChallenger() {
-
+		// Initialisation des joueurs
 		joueurH = new Joueur(TypeJoueur.George, Jeu.nombreEssais);
 		joueurM = new Joueur(TypeJoueur.T800, Jeu.nombreEssais); 
 		
@@ -35,21 +48,23 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaine());
 		// Le joueur T800 est en mode défense
 		joueur2 = new ControlleurJoueur(joueurM, new DefenseMCombinaison());
-		
+		// Initialisation la combinaison +-
 		jeuCombinaison1 = new Combinaison();
 		jeuCombinaison1.initialiser(joueur2.donnerCombinaison());
 		
 		tourDeJeu = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
-		
+		// Correspond à un tour de jeu
     	do {
     		tourDeJeu = jouer();
     	}
     	while(tourDeJeu);
 		
 	}
-
+	/**
+	 * Configure le jeu en mode défenseur (ordinateur attaque, humain défend)
+	 */
 	@Override
 	public void modeDefenseur() {
 		
@@ -68,13 +83,15 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 		tourDeJeu = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
-		
+		// Correspond à un tour de jeu
     	do {
     		tourDeJeu = jouer();
     	}
     	while(tourDeJeu);		
 	}
-
+	/**
+	 * Configure le jeu en mode duel (Humain VS ordinateur)
+	 */
 	@Override
 	public void duel() {
 		
@@ -95,20 +112,24 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 		tourDeJeu = true;
 		
 		vue.afficherJeuCombinaisonIntro(Jeu.nombreEssais); 
-		
+		// Correspond à un tour de jeu
     	do {
     		tourDeJeu = jouer();
     	}
     	while(tourDeJeu);	
 		
 	}
-
+	/**
+	 * Configuration d'un tour de jeu
+	 * En mode duel : Le joueur 1 attaque et le joueur 2 défend et inversement
+	 * Dans les autres mode : Le joueur 1 attaque et le joueur 2 défend
+	 */
 	@Override
 	public boolean jouer() {
 
 		boolean test;		
 
-		// Pour le mode duel
+		// En mode duel
 		if(modeDuel) {
 			
 			// Affiche la solution en mode développeur
@@ -121,6 +142,7 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 			proposition = joueur1.propose(jeuCombinaison1.getCombinaisonReponseMap());
 			// Le joueur2 analyse la proposition et retourne une indication
 			joueur2.analyse(jeuCombinaison1, proposition);
+			// Test la victoire ou non
 			test = verifierVictoire(joueur1.getJoueur(), jeuCombinaison1);
 
 			if(!test) {
@@ -147,34 +169,37 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 			proposition = joueur1.propose(jeuCombinaison1.getCombinaisonReponseMap());
 			// Le joueur2 analyse la proposition et retourne une indication
 			joueur2.analyse(jeuCombinaison1, proposition);
-
+			// Test la victoire ou non
 			test = verifierVictoire(joueur1.getJoueur(), jeuCombinaison1);	
 
 			return test;
 			
 		}
 	}
-
+	/**
+	 * Permet de vérifier si la partie est gagnée, perdue, continue
+	 */
 	@Override
 	public boolean verifierVictoire(Joueur joueur, Jeu jeu) {
 		
 		boolean resultat = true;
-		
+		// Vérifie si tous les chiffres sont exact
 		for(int i=0; i<jeu.getCombinaisonTest().length; i++) {
 			resultat = resultat && jeu.getCombinaisonTest()[i];
 		}
-		
+		// Si oui c'est gagné
     	if(resultat) {
     		vue.afficherMessage(joueur.getType() + " a gagné !!");
     		vue.afficherMessage("La combinaison est : " + jeu.getCombinaisonSecrete());
     		return false;
     	}
+    	// Si le joueur a jouer son dernier coup, alors c'est perdu
     	else if (joueur.getNombreEssais() == 1) {
     		vue.afficherMessage(joueur.getType() + " a Perdu");
     		vue.afficherMessage("La combinaison est : " + jeu.getCombinaisonSecrete());
     		return false;
     	}
-    	
+    	// Sinon la partie continue
     	else {
     		joueur.setNombreEssais(joueur.getNombreEssais() - 1);
     		vue.afficherMessage("***********************************************************************");
@@ -185,8 +210,6 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
     		vue.afficherMessage("***********************************************************************");
     		
     		return true;
-    	}
-		
+    	}		
 	}
-
 }
