@@ -76,8 +76,6 @@ public class AttaqueMMastermind extends Attaque {
 				miseAJourHistoriquePosition();									
 				nouvelleProposition();
 				
-				afficherHistoriquePosition();
-				
 				return proposition;				
 			}			
 			return proposition;	
@@ -190,7 +188,8 @@ public class AttaqueMMastermind extends Attaque {
 					}
 					if(ligne1 != -1 && ligne2 != -1 && ligne1 - ligne2 == 1) {
 						
-						comparerNouveauChiffrePresentMalPlace(ligne1, ligne2);
+							comparerNouveauChiffrePresentMalPlace(ligne1, ligne2);						
+							
 						ligne1 = -1;
 						ligne2 = -1;
 						break;
@@ -230,8 +229,8 @@ public class AttaqueMMastermind extends Attaque {
 						int totalChiffreLigne2 = historiqueResultat[ligne2][0] + historiqueResultat[ligne2][1];
 						
 						if(totalChiffreLigne1 == totalChiffreLigne2) {
-							
-							comparerNouveauChiffrePresentMalPlace(ligne1, ligne2);
+
+							comparerChiffrePresentMalPlace(ligne1, ligne2);
 							break;
 						}
 					}
@@ -243,6 +242,8 @@ public class AttaqueMMastermind extends Attaque {
 			nombreDeChiffrePresent--;
 		}		
 	}
+
+
 	/*
 	 * Recherche le nombre maximun de nombre présent dans historique résultat
 	 */
@@ -273,8 +274,47 @@ public class AttaqueMMastermind extends Attaque {
 		}		
 		return max;
 	}
-	// TODO variable initialisation boucle
+	
 	private void comparerNouveauChiffrePresentMalPlace(int ligne1, int ligne2) {
+
+		int[] tab1 = new int[Jeu.longueurCombinaison];
+		int[] tab2 = new int[Jeu.longueurCombinaison];
+
+		
+		// Création de 2 tableaux pour comparaison
+		for (int j=0; j<historiquePropositions[ligne1].length; j++) {
+			tab1[j] = historiquePropositions[ligne1][j];
+			tab2[j] = historiquePropositions[ligne2][j];
+		}		
+		for(int j=0; j<tab1.length; j++) {
+			// Si un chiffre est différent
+			if(tab1[j] != tab2[j]) {
+				
+				boolean chiffre1Appartient = false;
+				boolean chiffre2Appartient = false;
+				int indice = -1;
+				
+				// Si le chiffre ligne1 appartient à la combinaison et ligne2 n'appartient pas à la combinaison alors il est mal placé
+				for(int i=0; i<lesBonsChiffres.length; i++) {
+					
+					if(lesBonsChiffres[i] == tab1[j]) {						
+						chiffre1Appartient = true;
+						indice = i;
+					}
+					if(lesBonsChiffres[i] == tab2[j]) {
+						chiffre2Appartient = true;
+					}
+				}
+				if(chiffre1Appartient && !chiffre2Appartient) {
+					historiquePosition[indice][j] = 0;
+					break;
+				}
+			}			
+		}		
+	}
+	
+	// TODO variable initialisation boucle
+	private void comparerChiffrePresentMalPlace(int ligne1, int ligne2) {
 		
 		int[] tab1 = new int[Jeu.longueurCombinaison];
 		int[] tab2 = new int[Jeu.longueurCombinaison];
@@ -288,7 +328,7 @@ public class AttaqueMMastermind extends Attaque {
 		for(int j=0; j<tab1.length; j++) {
 			// Si un chiffre est différent
 			if(tab1[j] != tab2[j]) {
-				// Si le chiffre de la première ligne  fait parti de la combinaison alors il est mal placé
+				// Si le chiffre fait parti de la combinaison alors il est mal placé
 				for(int i=0; i<lesBonsChiffres.length; i++) {
 					
 					if(lesBonsChiffres[i] == tab1[j]) {						
@@ -626,39 +666,5 @@ public class AttaqueMMastermind extends Attaque {
 		char temp = propositionTab[indiceChiffre1];
 		propositionTab[indiceChiffre1] = propositionTab[indiceChiffre2];
 		propositionTab[indiceChiffre2] = temp;
-	}
-	
-	private void afficherHistoriquePropositions() {
-		System.out.println("Affichage historique propositions");
-		for(int i = 0; i<historiquePropositions.length; i++) {
-			for(int j=0; j<historiquePropositions[0].length; j++) {
-				System.out.print(historiquePropositions[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.println("------------------------------------");
-	}
-
-	private void afficherHistoriqueReponse() {
-		System.out.println("Affichage historique réponses");
-		for(int i=0; i<historiqueResultat.length; i++) {
-			for(int j=0; j<historiqueResultat[0].length; j++){
-				System.out.print(historiqueResultat[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.println("------------------------------------");
-	}
-
-	private void afficherHistoriquePosition() {
-		System.out.println("Affichage historique position");
-		for (int i = 0; i < historiquePosition.length; i++) {
-			
-			for(int j=0; j<historiquePosition[i].length; j++) {
-				System.out.print(historiquePosition[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.println("------------------------------------");
 	}
 }
