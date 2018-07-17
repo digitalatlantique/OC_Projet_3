@@ -1,6 +1,6 @@
 package com.jeu.controller;
 
-import com.jeu.controller.attaquer.AttaqueHumaine;
+import com.jeu.controller.attaquer.AttaqueHumaineCombinaison;
 import com.jeu.controller.attaquer.AttaqueMCombinaison;
 import com.jeu.controller.defendre.DefenseHumaineCombinaison;
 import com.jeu.controller.defendre.DefenseMCombinaison;
@@ -45,7 +45,7 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 		
 		modeDuel = false;
 		// Le joueur George est en mode attaque
-		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaine());
+		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaineCombinaison());
 		// Le joueur T800 est en mode défense
 		joueur2 = new ControlleurJoueur(joueurM, new DefenseMCombinaison());
 		// Initialisation la combinaison +-
@@ -100,7 +100,7 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 		
 		modeDuel = true;
 		// Joueur1 (Goerge) affronte Joueur2 (T800)
-		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaineCombinaison());
+		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaineCombinaison(), new DefenseHumaineCombinaison());
 		joueur2 = new ControlleurJoueur(joueurM, new AttaqueMCombinaison(), new DefenseMCombinaison() );
 		// T800 Initialise une combinaison
 		jeuCombinaison1 = new Combinaison();

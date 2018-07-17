@@ -1,6 +1,7 @@
 package com.jeu.controller;
 
-import com.jeu.controller.attaquer.AttaqueHumaine;
+import com.jeu.controller.attaquer.AttaqueHumaineCombinaison;
+import com.jeu.controller.attaquer.AttaqueHumaineMastermind;
 import com.jeu.controller.attaquer.AttaqueMMastermind;
 import com.jeu.controller.defendre.DefenseHumaineMastermind;
 import com.jeu.controller.defendre.DefenseMMastermind;
@@ -43,7 +44,7 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 
 		modeDuel = false;
 		// Le joueur George est en mode attaque
-		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaine());
+		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaineMastermind());
 		// Le joueur T800 est en mode défense
 		joueur2 = new ControlleurJoueur(joueurM, new DefenseMMastermind());
 		
@@ -98,7 +99,7 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 		
 		modeDuel = true;
 		// Joueur1 (Goerge) affronte Joueur2 (T800)
-		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaine(), new DefenseHumaineMastermind());
+		joueur1 = new ControlleurJoueur(joueurH, new AttaqueHumaineMastermind(), new DefenseHumaineMastermind());
 		joueur2 = new ControlleurJoueur(joueurM, new AttaqueMMastermind(), new DefenseMMastermind() );
 		// T800 Initialise une combinaison
 		jeuMastermind1 = new Combinaison();
@@ -181,7 +182,7 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 		boolean resultat = false;
 		int place = Integer.parseInt((String) jeu.getCombinaisonReponseMap().get("place"));
 		// Vérifie si tous les chiffres sont placés
-		if(place == Jeu.longueurCombinaison) {
+		if(place == Jeu.longueurMastermind) {
 			resultat = true;
 		}
 		// Si oui c'est gagné

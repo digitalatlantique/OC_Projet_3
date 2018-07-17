@@ -14,8 +14,7 @@ public abstract class Attaque implements Attaquer {
 	
 	protected VueConsole vue = new VueConsole();
 	protected Scanner sc = new Scanner(System.in);
-	protected String saisie;
-	
+	protected String saisie;	
 	protected String proposition = "";
 	protected char[] propositionTab;
 	

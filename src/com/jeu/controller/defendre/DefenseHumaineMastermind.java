@@ -10,6 +10,8 @@ import com.jeu.model.Jeu;
  *
  */
 public class DefenseHumaineMastermind extends Defense {
+	
+	private int longueur = Jeu.longueurMastermind;
 
 	@Override
 	public void analyser(Jeu jeu, String proposition) {
@@ -27,7 +29,7 @@ public class DefenseHumaineMastermind extends Defense {
 			saisie = sc.next();
 			
 			try {
-				test = testerReponseSaisie(saisie, Jeu.longueurCombinaison);
+				test = testerReponseSaisie(saisie, Jeu.longueurMastermind);
 			} catch (Exception e) {
         		test = false;
         		System.out.println(e.getMessage());
@@ -38,13 +40,13 @@ public class DefenseHumaineMastermind extends Defense {
 		
 		compteurPlace = Integer.parseInt(saisie);
 		
-		if(compteurPlace < Jeu.longueurCombinaison) {
+		if(compteurPlace < Jeu.longueurMastermind) {
 			vue.afficherMessage("Pour les chiffres restants indiquer le nombre de chiffre présent : ");
 			do {
 				saisie = sc.next();
 				
 				try {
-					test = testerReponseSaisie(saisie, Jeu.longueurCombinaison - compteurPlace);
+					test = testerReponseSaisie(saisie, Jeu.longueurMastermind - compteurPlace);
 				} catch (Exception e) {
 	        		test = false;
 	        		System.out.println(e.getMessage());

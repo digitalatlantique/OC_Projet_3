@@ -79,11 +79,11 @@ public class AttaqueMMastermind extends Attaque {
 	 */
 	public AttaqueMMastermind() {
 		
-		historiquePropositions = new int[Jeu.nombreEssais][Jeu.longueurCombinaison];
+		historiquePropositions = new int[Jeu.nombreEssais][Jeu.longueurMastermind];
 		historiqueResultat = new int[Jeu.nombreEssais][2];
-		indiceDisponible = new boolean[Jeu.longueurCombinaison];
+		indiceDisponible = new boolean[Jeu.longueurMastermind];
 		Arrays.fill(indiceDisponible, true);
-		historiquePosition = new int[Jeu.longueurCombinaison][Jeu.longueurCombinaison];
+		historiquePosition = new int[Jeu.longueurMastermind][Jeu.longueurMastermind];
 		
 		// On assigne toutes les positions à 2 (position incertaine)
 		for(int i=0; i<historiquePosition.length;i++) {
@@ -91,7 +91,7 @@ public class AttaqueMMastermind extends Attaque {
 				historiquePosition[i][j] = 2;
 			}
 		}
-		lesBonsChiffres = new int[Jeu.longueurCombinaison];
+		lesBonsChiffres = new int[Jeu.longueurMastermind];
 	}
 	/**
 	 * L'ordinateur fait une proposition en fonction des indications du défenseur
@@ -120,7 +120,7 @@ public class AttaqueMMastermind extends Attaque {
 			/* Si il reste des chiffres à trouver
 			 * On propose une série reprenant la combinaison précédente +1 à chaque chiffre restant à trouvé
 			 */
-			if(trouve < Jeu.longueurCombinaison) {
+			if(trouve < Jeu.longueurMastermind) {
 				
 				proposerChiffre();
 			}
@@ -143,7 +143,7 @@ public class AttaqueMMastermind extends Attaque {
 	 */
 	private String premierCoup() {
 		
-		int longueurCombinaison = Jeu.longueurCombinaison;
+		int longueurCombinaison = Jeu.longueurMastermind;
 		
 		for(int i=0; i<longueurCombinaison; i++) {
 			proposition += 0;
@@ -340,8 +340,8 @@ public class AttaqueMMastermind extends Attaque {
 	
 	private void comparerNouveauChiffrePresentMalPlace(int ligne1, int ligne2) {
 
-		int[] tab1 = new int[Jeu.longueurCombinaison];
-		int[] tab2 = new int[Jeu.longueurCombinaison];
+		int[] tab1 = new int[Jeu.longueurMastermind];
+		int[] tab2 = new int[Jeu.longueurMastermind];
 
 		
 		// Création de 2 tableaux pour comparaison
@@ -379,8 +379,8 @@ public class AttaqueMMastermind extends Attaque {
 	
 	private void comparerChiffrePresentMalPlace(int ligne1, int ligne2) {
 		
-		int[] tab1 = new int[Jeu.longueurCombinaison];
-		int[] tab2 = new int[Jeu.longueurCombinaison];
+		int[] tab1 = new int[Jeu.longueurMastermind];
+		int[] tab2 = new int[Jeu.longueurMastermind];
 
 		
 		// Création de 2 tableaux pour comparaison
@@ -496,8 +496,8 @@ public class AttaqueMMastermind extends Attaque {
 	 */
 	private void comparerDeuxLignesChiffrePlace(int ligne1, int ligne2) {
 
-		int[] tab1 = new int[Jeu.longueurCombinaison];
-		int[] tab2 = new int[Jeu.longueurCombinaison];
+		int[] tab1 = new int[Jeu.longueurMastermind];
+		int[] tab2 = new int[Jeu.longueurMastermind];
 		// Création de 2 tableaux pour comparaison
 		for (int j=0; j<historiquePropositions[ligne1].length; j++) {
 			tab1[j] = historiquePropositions[ligne1][j];
@@ -708,8 +708,8 @@ public class AttaqueMMastermind extends Attaque {
 	}
 	// Dans le sens inverse de lecture
 	private boolean chercherChiffrePrecedantDisponible(boolean test) {
-		indice1 = Jeu.longueurCombinaison - 1;
-		indice2 = Jeu.longueurCombinaison - 2;
+		indice1 = Jeu.longueurMastermind - 1;
+		indice2 = Jeu.longueurMastermind - 2;
 		
 		while(indice1 > 0 && test) {
 			

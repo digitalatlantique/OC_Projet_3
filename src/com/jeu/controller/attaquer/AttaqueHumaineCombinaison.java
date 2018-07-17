@@ -8,7 +8,7 @@ import com.jeu.model.Jeu;
  * @author Workstation
  *
  */
-public class AttaqueHumaine extends Attaque  {
+public class AttaqueHumaineCombinaison extends Attaque  {
 
 	@Override
 	public String proposer(HashMap<String, String> reponse) {

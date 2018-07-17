@@ -10,6 +10,8 @@ import com.jeu.model.Jeu;
  *
  */
 public class DefenseHumaineCombinaison extends Defense {
+	
+	private int longueur = Jeu.longueurCombinaison;
 
 	@Override
 	public void analyser(Jeu jeu, String proposition) {

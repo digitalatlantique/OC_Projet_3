@@ -234,7 +234,8 @@ public abstract class ControlleurJeu implements ModeJeu {
 		Properties property = new Properties();
 		InputStream input = null;
 		String file = "config.properties";
-		String longueur;
+		String longueurCombinaison;
+		String longueurMastermind;
 		String essais;
 		
 		try {
@@ -242,11 +243,13 @@ public abstract class ControlleurJeu implements ModeJeu {
 			
 			property.load(input);
 			
-			longueur = property.getProperty("longueur");
+			longueurCombinaison = property.getProperty("longueur");
+			longueurMastermind = property.getProperty("nombreDeChiffre");
 			essais = property.getProperty("essais");
 			
 			try {
-				Jeu.longueurCombinaison = propertiesTestLongueur(longueur);
+				Jeu.longueurCombinaison = propertiesTestLongueur(longueurCombinaison);
+				Jeu.longueurMastermind = propertiesTestLongueur(longueurMastermind);
 				Jeu.nombreEssais = propertiesTestEssais(essais);
 			}
 			catch(Exception e) {

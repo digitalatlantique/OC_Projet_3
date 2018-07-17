@@ -40,6 +40,8 @@ public abstract class Jeu {
 
     public static int longueurCombinaison = 4;
     
+    public static int longueurMastermind = 4;
+    
     public static int nombreEssais = 10;
     
     public abstract void initialiser(String combinaison);

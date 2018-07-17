@@ -15,7 +15,6 @@ public abstract class Defense implements Defendre{
 	
 	protected Scanner sc = new Scanner(System.in);
 	protected VueConsole vue = new VueConsole();
-	protected int longueur = Jeu.longueurCombinaison;
 	protected String saisie;	
 	protected String reponse;
 	protected char[] reponseTab;
