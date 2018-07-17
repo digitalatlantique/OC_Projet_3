@@ -71,7 +71,7 @@ public abstract class ControlleurJeu implements ModeJeu {
     /**
      * Définit le choix mode développeur ou normal
      */
-    protected static boolean ChoixModeSession;
+    protected static boolean ChoixModeSession = false;
     
     /**
      * Définit le choix mode de jeu : challenger, défenseur, duel
@@ -89,13 +89,23 @@ public abstract class ControlleurJeu implements ModeJeu {
     
     public static void main(String[] args) {
 
-
+    	ControlleurJeu.initialiserParametreLigneCommande(args);
     	ControlleurJeu.initialiserData();
     	ControlleurJeu.initialiserSession();
     	ControlleurJeu.demarrerSession();    	
     }
-    
-    public abstract boolean jouer();
+
+	private static void initialiserParametreLigneCommande(String[] args) {
+
+    	for(int i=0; i<args.length; i++) {
+    		
+    		if(args[i].equals("--dev")) {
+    			ChoixModeSession = true;
+    		}
+    	}		
+	}
+
+	public abstract boolean jouer();
     public abstract boolean verifierVictoire(Joueur joueur, Jeu jeu);
     /**
      * Initialise la session et paramètre le choix mode développeur ou non
@@ -109,10 +119,9 @@ public abstract class ControlleurJeu implements ModeJeu {
     	
     	// Affichage d'un message d'accueil
     	vue.afficherAccueil();
-    	vue.afficherChoixSession();
+
     	
-    	// Récupération du choix de session (Joueur / développeur)
-    	initialiserChoixSession();  	
+ 	
     }
     /**
      * Permet d'initialiser et de démarrer une session
@@ -237,15 +246,17 @@ public abstract class ControlleurJeu implements ModeJeu {
 		String longueurCombinaison;
 		String longueurMastermind;
 		String essais;
+		String developpeur = "";
 		
 		try {
 			input = new FileInputStream(file);
 			
 			property.load(input);
 			
-			longueurCombinaison = property.getProperty("longueur");
-			longueurMastermind = property.getProperty("nombreDeChiffre");
+			longueurCombinaison = property.getProperty("longueurCombinaison");
+			longueurMastermind = property.getProperty("longueurMastermind");
 			essais = property.getProperty("essais");
+			developpeur = property.getProperty("developpeur").toLowerCase();
 			
 			try {
 				Jeu.longueurCombinaison = propertiesTestLongueur(longueurCombinaison);
@@ -270,36 +281,10 @@ public abstract class ControlleurJeu implements ModeJeu {
 			}
 		}
 		
-    }
-
-    /**
-     * Permet de choisir de jouer en mode développeur ou joueur
-     */
-    public static void initialiserChoixSession() {
-    	
-    	String saisie;
-    	boolean test;
-    	
-    	do {      		
-    		saisie = sc.next();
-        	try {
-        		test = testerMenu(saisie);
-        		
-        		if(saisie.equals("1")) {
-        			ChoixModeSession = false;        			
-        		}
-        		else {
-        			ChoixModeSession = true;
-        		}
-        	}
-        	catch (Exception e) {
-        		test = false;
-        		logger.debug(e.getMessage());
-            	vue.afficherChoixSession();
-        	}        	
-    	}
-    	while(!test);
-   	
+		if(developpeur.equals("true")) {
+			ChoixModeSession = true;
+		}
+		
     }
     
     /**

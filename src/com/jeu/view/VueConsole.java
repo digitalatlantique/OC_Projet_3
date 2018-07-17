@@ -42,13 +42,6 @@ public class VueConsole {
     	System.out.println(message);
     }
     
-    public void afficherChoixSession() {
-    	String message = "1 : Joueur\n"
-						+"2 : Développeur";
-    	
-    	System.out.println(message);
-    }
-    
     public void afficherPoursuivreSession() {
     	String message = "Voulez-vous poursuivre la session ?\n"
 						+ "1 : Oui\n"
