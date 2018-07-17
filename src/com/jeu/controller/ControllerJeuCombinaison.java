@@ -8,11 +8,18 @@ import com.jeu.model.Combinaison;
 import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
 import com.jeu.model.TypeJoueur;
+import com.jeu.view.VueConsole;
 
-public class ControlleurJeuCombinaison extends ControlleurJeu {
+public class ControllerJeuCombinaison extends ControllerJeu {
+	
+    /**
+     * Permet l'affichage des éléments en console
+     */
+    private VueConsole vue;
 
-	public ControlleurJeuCombinaison() {
+	public ControllerJeuCombinaison() {
 
+		vue = new VueConsole();
 	}
 	/**
 	 * Correspond à la première combinaison
@@ -133,7 +140,7 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 		if(modeDuel) {
 			
 			// Affiche la solution en mode développeur
-			if(ChoixModeSession) {
+			if(choixModeSession) {
 				vue.afficherMessage("Mode Développeur :\n"
 									+ "la solution de " + joueur1.getJoueur().getType() + " est : " + jeuCombinaison1.getCombinaisonSecrete() + "\n"
 									+ "la solution de " + joueur2.getJoueur().getType() + " est : " + jeuCombinaison2.getCombinaisonSecrete());
@@ -162,7 +169,7 @@ public class ControlleurJeuCombinaison extends ControlleurJeu {
 		else {
 			
 			// Affiche la solution en mode développeur
-			if(ChoixModeSession) {
+			if(choixModeSession) {
 				vue.afficherMessage("Mode Développeur, la solution est : " + jeuCombinaison1.getCombinaisonSecrete());
 			}
 			// Le joueur1 propose en fonction de l'indication du défenseur 

@@ -10,8 +10,13 @@ import com.jeu.model.Jeu;
 import com.jeu.model.Joueur;
 import com.jeu.model.Mastermind;
 import com.jeu.model.TypeJoueur;
+import com.jeu.view.VueConsole;
 
-public class ControlleurJeuMastermind extends ControlleurJeu {
+public class ControllerJeuMastermind extends ControllerJeu {
+	
+	public ControllerJeuMastermind() {
+		vue = new VueConsole();
+	}
 	
 	/**
 	 * Correspond à la première combinaison
@@ -33,9 +38,14 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 	 * Représente l'ordinateur (machine)
 	 */
 	private Joueur joueurM;
+    /**
+     * Permet l'affichage des éléments en console
+     */
+    private VueConsole vue;
+    
 	/**
 	 * Configure le jeu en mode challenger (humain attaque, ordinateur défend)
-	 */
+	 */	
 	@Override
 	public void modeChallenger() {
 		
@@ -132,7 +142,7 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 		if(modeDuel) {
 			
 			// Affiche la solution en mode développeur
-			if(ChoixModeSession) {
+			if(choixModeSession) {
 				vue.afficherMessage("Mode Développeur :\n"
 									+ "la solution de " + joueur1.getJoueur().getType() + " est : " + jeuMastermind1.getCombinaisonSecrete() + "\n"
 									+ "la solution de " + joueur2.getJoueur().getType() + " est : " + jeuMastermind2.getCombinaisonSecrete());
@@ -160,7 +170,7 @@ public class ControlleurJeuMastermind extends ControlleurJeu {
 		else {
 			
 			// Affiche la solution en mode développeur
-			if(ChoixModeSession) {
+			if(choixModeSession) {
 				vue.afficherMessage("Mode Développeur, la solution est : " + jeuMastermind1.getCombinaisonSecrete());
 			}
 			// Le joueur1 propose en fonction de l'indication du défenseur 

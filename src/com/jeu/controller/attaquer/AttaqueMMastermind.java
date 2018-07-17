@@ -6,7 +6,7 @@ import java.util.HashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.jeu.controller.ControlleurJeu;
+import com.jeu.controller.ControllerJeu;
 import com.jeu.model.Jeu;
 /**
  * Cette classe permet à l'ordinateur (machine) de faire une proposition avec le jeu mastermind
