@@ -99,18 +99,6 @@ public class VueConsole {
 							+ "***********************************************************************";
     	System.out.println(message);
     }
-    /**
-     * @param combinaison
-     */
-    public void afficherCombinaison(String combinaison) {
-        // TODO implement here
-    }
 
-    /**
-     * 
-     */
-    public void afficherVictoire() {
-        // TODO implement here
-    }
 
 }

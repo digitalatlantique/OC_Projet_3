@@ -48,8 +48,5 @@ public class Joueur {
 
 	public void setNombreEssais(int nombreEssais) {
 		this.nombreEssais = nombreEssais;
-	}
-
-
-    
+	}    
 }
