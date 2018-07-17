@@ -2,10 +2,10 @@
 
 
 Pour compiler l'application : 
-java -jar Jeu.jar
+java -jar jeu.jar
 
 Pour lancer le jeu en mode développeur :
-java -jar Jeu.jar --dev
+java -jar jeu.jar --dev
 ou dans le fichier de configuration (config.properties) : developpeur=true
 
 Pour ajouter un nouveau jeu de logique :
@@ -15,9 +15,6 @@ Dans ControllerJeuFactory
 *Ajouter la classe dans le package model
 
 
-Disponible dans ce projet:
-*un diagramme de classe	=> diagrammes/ClassDiagram.png
-*Les sources
 
 
  
