@@ -1,8 +1,11 @@
 package com.jeu.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.LinkOption;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -53,8 +56,6 @@ public class ControllerJeuIntro {
     	jeuIntro.initialiserSession();
     	jeuIntro.demarrerSession();    	
     }
-    
-
 
 	private void initialiserParametreLigneCommande(String[] args) {
 
@@ -73,14 +74,14 @@ public class ControllerJeuIntro {
     	
 		Properties property = new Properties();
 		InputStream input = null;
-		String file = "config.properties";
+		String file = "/config.properties";
 		String longueurCombinaison;
 		String longueurMastermind;
 		String essais;
 		String developpeur = "";
 		
 		try {
-			input = new FileInputStream(file);
+			input = ControllerJeuIntro.class.getResourceAsStream(file);
 			
 			property.load(input);
 			
