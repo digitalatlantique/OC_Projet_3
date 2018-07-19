@@ -2,7 +2,7 @@
 
 ---------------------------------
 
-## Auteur : ### * Mickaël L *
+## Auteur : * Mickaël L *
 
 ## Avancement du projet 
 Le projet est fonctionnel et répond à la demande de l'énoncé du projet 3.
