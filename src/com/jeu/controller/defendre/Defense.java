@@ -18,6 +18,7 @@ public abstract class Defense implements Defendre{
 	protected String saisie;	
 	protected String reponse;
 	protected char[] reponseTab;
+	public static int nombreDeChiffre = 10;
 	
     /**
      * Permet de générer un nombre compris dans un interval

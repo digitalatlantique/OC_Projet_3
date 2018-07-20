@@ -70,19 +70,22 @@ public class DefenseHumaineMastermind extends Defense {
 	public String genererCombinaison() {
 		
 		boolean test;
+		int chiffre = nombreDeChiffre - 1;
+		String message = "Faire deviner une combinaison valide, composée de " + longueur + " chiffres\n"
+							+"Les chiffres de la combinaison doivent être compris dans l'intervalle 0 et " + chiffre;
 		
-		vue.afficherMessage("Faire deviner une combinaison composée de " + longueur + " chiffres");
+		vue.afficherMessage(message);
 		
 		do {			
 			saisie = sc.next();
 			
 			try {
-				test = testerCombinaisonSaisie(saisie, longueur);
+				test = testerCombinaisonSaisie(saisie, longueur, nombreDeChiffre);
 			} 
 			catch (Exception e) {
         		test = false;
         		System.out.println(e.getMessage());
-        		vue.afficherMessage("Faire deviner une combinaison valide, composée de " + longueur + " chiffres");
+        		vue.afficherMessage(message);
 			}
 			
 		}
@@ -104,6 +107,29 @@ public class DefenseHumaineMastermind extends Defense {
 		if(Integer.parseInt(string) > longueur) {			
 			throw new Exception("Merci de saisir un nombre inférieur ou égal à : " + longueur);			
 		}
+		return resultat;    	
+    }
+    
+    public boolean testerCombinaisonSaisie(String string, int longueur, int nombreUtilisable) throws Exception {			
+    	 
+		Pattern pattern = Pattern.compile("[0-9]{" + longueur + "}");
+		Matcher matcher = pattern.matcher(string);
+		boolean resultat = matcher.matches();
+		int chiffreUtilisable = nombreUtilisable - 1;
+		
+		if(!resultat) {
+			throw new Exception("Saisie incorrecte !");
+		}
+
+		char[] tab = string.toCharArray();
+		
+		for (int i=0; i<tab.length; i++) {
+			int chiffre = Character.digit(tab[i], 10);
+			
+			if (chiffre > chiffreUtilisable) {
+				throw new Exception("Les chiffres doivent être compris dans l'intervalle 0 à " + chiffreUtilisable);
+			}
+		}		
 		return resultat;    	
     }
 

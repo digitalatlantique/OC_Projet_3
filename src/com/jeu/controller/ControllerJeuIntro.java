@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.jeu.controller.defendre.Defense;
 import com.jeu.model.Jeu;
 import com.jeu.view.VueConsole;
 
@@ -77,6 +78,7 @@ public class ControllerJeuIntro {
 		String file = "/config.properties";
 		String longueurCombinaison;
 		String longueurMastermind;
+		String nombreDeChiffre;
 		String essais;
 		String developpeur = "";
 		
@@ -87,12 +89,14 @@ public class ControllerJeuIntro {
 			
 			longueurCombinaison = property.getProperty("longueurCombinaison");
 			longueurMastermind = property.getProperty("longueurMastermind");
+			nombreDeChiffre = property.getProperty("nombreDeChiffre");
 			essais = property.getProperty("essais");
 			developpeur = property.getProperty("developpeur").toLowerCase();
 			
 			try {
 				Jeu.longueurCombinaison = propertiesTestLongueur(longueurCombinaison);
 				Jeu.longueurMastermind = propertiesTestLongueur(longueurMastermind);
+				Defense.nombreDeChiffre = propertiesTestNombreDeChiffre(nombreDeChiffre);
 				Jeu.nombreEssais = propertiesTestEssais(essais);
 			}
 			catch(Exception e) {
@@ -119,7 +123,21 @@ public class ControllerJeuIntro {
 		
     }
     
-    /**
+    private int propertiesTestNombreDeChiffre(String nombreDeChiffre) throws Exception {
+    	
+    	int nombre = Integer.parseInt(nombreDeChiffre);
+
+    	if(nombre < 4 || nombre > 10) {
+    		throw new Exception("Merci d'écrire un nombre compris entre 4 et 10 !\n"
+    							+ "Initialisation du nombre de chiffre utilisable à 10");
+    	}
+    	else {
+    		return nombre;
+    	}
+    	
+	}
+
+	/**
      * Cette méthode test la longueur saisie dans le fichier properties 
      * De type int et compris entre 4 et 10
      * @throws Exception 

@@ -63,8 +63,7 @@ public class DefenseMMastermind extends Defense {
 					break;
 				}
 			}						
-		}
-		
+		}		
 		jeu.getCombinaisonReponseMap().put(clePlace, String.valueOf(compteurPlace));
 		jeu.getCombinaisonReponseMap().put(clePresent, String.valueOf(compteurPresent));
 
@@ -78,7 +77,7 @@ public class DefenseMMastermind extends Defense {
 		
 		for(int i=0; i<longueur; i++) {
 			
-			temp = genererNombre(0, 9);
+			temp = genererNombre(0, nombreDeChiffre - 1);
 			combinaison += String.valueOf(temp);
 		}
 
